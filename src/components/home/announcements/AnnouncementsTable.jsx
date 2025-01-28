@@ -1,10 +1,9 @@
 import React, { useState, useRef, useEffect } from "react";
-import { supplairAPI } from "../../../utils/axios";
 import { ScaleLoader } from "react-spinners";
 import Pagination from "../../utils/Pagination";
 import { toast } from "react-toastify";
-import Cookies from "universal-cookie";
 import _deleteIcon from "../../../assets/images/delete.svg";
+import dummyData from "./dummyData.json";
 
 const AnnouncementsTable = ({ updateGet, menuOpen, setMenuOpen, setUpdateGet }) => {
   const menuRef = useRef();
@@ -19,27 +18,11 @@ const AnnouncementsTable = ({ updateGet, menuOpen, setMenuOpen, setUpdateGet }) 
 
   let makeRequest = (page) => {
     setLoading(true);
-    const cookies = new Cookies();
-    const storedAccessToken = cookies.get("access_token");
-
-    supplairAPI
-      .get("announcement-srv/private/announcements?page=" + page + "&size=6", {
-        headers: {
-          Authorization: `Bearer ${storedAccessToken}`,
-        },
-      })
-      .then((data) => {
-        setAnnouncemenetsData(data.data?.content);
-        setTotalPages(data.data?.totalPages);
-        // console.log(data.data.map(d=>d.companyId))
-      })
-      .catch((err) => {
-        if (Math.floor(err?.response?.status / 100) == 5) toast.error("Server Error");
-        else toast.error(err.message);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+    setTimeout(() => {
+      setLoading(false);
+      setAnnouncemenetsData(dummyData[page]);
+      setTotalPages(2);
+    }, 1000);
   };
 
   useEffect(() => {
@@ -66,21 +49,8 @@ const AnnouncementsTable = ({ updateGet, menuOpen, setMenuOpen, setUpdateGet }) 
   let deleteAnnouncement = (e, id) => {
     e.stopPropagation();
     if (confirm("Are you sure you want to delete the announcement ?")) {
-      const cookies = new Cookies();
-      const storedAccessToken = cookies.get("access_token");
-      supplairAPI
-        .delete("announcement-srv/private/" + id, {
-          headers: {
-            Authorization: `Bearer ${storedAccessToken}`,
-          },
-        })
-        .then((response) => {
-          setUpdateGet((prev) => !prev);
-          toast.success(response.data);
-        })
-        .catch((err) => {
-          toast.error(err.message);
-        });
+      setUpdateGet((prev) => !prev);
+      toast.success("Data Deleted");
     }
   };
 
@@ -120,8 +90,14 @@ const AnnouncementsTable = ({ updateGet, menuOpen, setMenuOpen, setUpdateGet }) 
                 announcementsData.map((announcement) => (
                   <tr key={announcement.announcementId}>
                     <td className="px-6 py-2 whitespace-nowrap h-[70px] flex justify-center">
-                      <a href={announcement.imagePath} target="_blank">
-                        <img src={announcement.imagePath} className="h-[55px]" />
+                      <a
+                        href={announcement.imagePath}
+                        target="_blank"
+                      >
+                        <img
+                          src={announcement.imagePath}
+                          className="h-[55px]"
+                        />
                       </a>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
@@ -134,13 +110,19 @@ const AnnouncementsTable = ({ updateGet, menuOpen, setMenuOpen, setUpdateGet }) 
                       {checkAnnouncemnetStatus(announcement.startDate, announcement.endDate)}
                     </td>
                     <td className="relative py-4 pr-10 text-sm font-medium text-right whitespace-nowrap">
-                      <div className="inline-block text-left" ref={menuRef}>
+                      <div
+                        className="inline-block text-left"
+                        ref={menuRef}
+                      >
                         <button
                           onClick={(e) => {
                             deleteAnnouncement(e, announcement.announcementId);
                           }}
                         >
-                          <img src={_deleteIcon} className="h-6" />
+                          <img
+                            src={_deleteIcon}
+                            className="h-6"
+                          />
                         </button>
                       </div>
                     </td>

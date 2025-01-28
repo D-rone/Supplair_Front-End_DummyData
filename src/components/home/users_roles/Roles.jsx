@@ -3,32 +3,19 @@ import showMore from "../../../assets/images/more.svg";
 import { v4 } from "uuid";
 import UpdateRolePopup from "../../pupups/UpdateRolePopup";
 import AddRolePopup from "../../pupups/AddRolePopup";
-import Cookies from "universal-cookie";
-import { useUserContext } from "../../../pages/HomePage";
-import { supplairAPI } from "../../../utils/axios";
 
 function Roles() {
-  const cookies = new Cookies();
-  const storedAccessToken = cookies.get("access_token");
-  const formData = new FormData();
-  const { userData, setUserData } = useUserContext();
   const [roles, setRoles] = useState([]);
   const [update, setUpdate] = useState(false);
 
   useEffect(() => {
-    supplairAPI
-      .get(`auth-srv/api/v1/roles/` + userData.companyId, {
-        headers: {
-          Authorization: "Bearer " + storedAccessToken,
-        },
-      })
-      .then((res) => {
-        setRoles(res.data);
-        hideDetails();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    setRoles([
+      { roleName: "Role 1", permissions: ["Inventory", "Sales", "Billing"] },
+      { roleName: "Role 2", permissions: ["Inventory"] },
+      { roleName: "Role 3", permissions: ["Billing"] },
+      { roleName: "Role 4", permissions: ["Announcements"] },
+      { roleName: "Role 5", permissions: ["Users & Roles"] },
+    ]);
   }, [update]);
 
   const [updateRole, setUpdateRole] = useState(null);
@@ -64,17 +51,18 @@ function Roles() {
         <table className="w-[96%] mx-[2%]">
           <thead className="text-gray-400 border-b-2 border-gray-300">
             <tr>
-              <th className="px-[5%] py-4 font-normal w-[30%] text-start">
-                Role Name
-              </th>
+              <th className="px-[5%] py-4 font-normal w-[30%] text-start">Role Name</th>
               <th className="font-normal text-start">Access Rights</th>
               <th></th>
             </tr>
           </thead>
           <tbody className="text-lg">
             {roles.map((role) => (
-              <tr className={"border-b-2 border-gray-300 h-20"} key={v4()}>
-                <td className="px-[4%] font-medium hover:cursor-pointer text-supplair-primary">
+              <tr
+                className={"border-b-2 border-gray-300 h-20"}
+                key={v4()}
+              >
+                <td className="px-[4%] font-medium text-supplair-primary">
                   <h3 className="inline">{role.roleName}</h3>
                 </td>
                 <td className="relative font-medium">
@@ -103,7 +91,11 @@ function Roles() {
                     setShowDetails(role.roleName);
                   }}
                 >
-                  <img src={showMore} alt="" className="w-6" />
+                  <img
+                    src={showMore}
+                    alt=""
+                    className="w-6"
+                  />
                 </td>
               </tr>
             ))}
@@ -119,7 +111,10 @@ function Roles() {
           <></>
         )}
         {addRole ? (
-          <AddRolePopup close={setAddRole} setUpdate={setUpdate} />
+          <AddRolePopup
+            close={setAddRole}
+            setUpdate={setUpdate}
+          />
         ) : (
           <></>
         )}

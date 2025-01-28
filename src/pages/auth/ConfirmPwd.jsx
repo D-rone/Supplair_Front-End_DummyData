@@ -24,15 +24,8 @@ export default function ConfirmPwd() {
   const token = match[1]; // Extracted token
 
   useEffect(() => {
-    supplairAPI
-      .post(`auth-srv/api/v1/auth/is-password-forgetten/${token}`)
-      .then((res) => {
-        const isPasswordForgotten = res.data;
-        setIsPasswordForgotten(isPasswordForgotten);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    const isPasswordForgotten = res.data;
+    setIsPasswordForgotten(isPasswordForgotten);
   }, [location.pathname]);
 
   const handleClick = () => {
@@ -47,13 +40,6 @@ export default function ConfirmPwd() {
       return;
     }
     try {
-      const response = await supplairAPI.post(
-        "auth-srv/api/v1/auth/reset-password",
-        {
-          token: token,
-          password: password,
-        }
-      );
       toast.dismiss();
       toast.success("Password saved successfully", { autoClose: false });
       navigate("/login", { replace: true });
@@ -65,19 +51,18 @@ export default function ConfirmPwd() {
         // Your component content when isPasswordForgotten is true
         <>
           <div className="absolute top-0 right-0 mt-2 mr-10">
-            <span className="font-semibold font-Raleway ">
-              Already have an account ?
-            </span>
-            <a className="mt-2 mr-64 text-supplair-primary" href="/login">
+            <span className="font-semibold font-Raleway ">Already have an account ?</span>
+            <a
+              className="mt-2 mr-64 text-supplair-primary"
+              href="/login"
+            >
               Log In
             </a>
           </div>
           <div className="flex">
             <SidePage />
             <div className="flex flex-col items-center justify-center w-full h-screen pb-[12vh]">
-              <h1 className="mt-20 mb-6 mr-40 text-3xl text-center">
-                Forgot Password
-              </h1>
+              <h1 className="mt-20 mb-6 mr-40 text-3xl text-center">Forgot Password</h1>
               <form onSubmit={handleSave}>
                 <div className="flex flex-col items-center mt-4">
                   <div className="relative flex items-center mb-5">
@@ -122,9 +107,7 @@ export default function ConfirmPwd() {
       ) : (
         <div>
           <h1 className="mt-5  ml-5 text-3xl text-left">Reset Your Password</h1>
-          <p className="mt-5 m ml-5 text-lg text-left">
-            Sorry,your password reset link expired
-          </p>
+          <p className="mt-5 m ml-5 text-lg text-left">Sorry,your password reset link expired</p>
         </div>
       )}
     </>

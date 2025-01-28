@@ -1,0 +1,68 @@
+{
+  "0": [
+    {
+      "announcementId": 0,
+      "imagePath": "/a1.png",
+      "startDate": "2023-10-15T14:30:00.000Z",
+      "endDate": "2026-10-15T14:30:00.000Z"
+    },
+
+    {
+      "announcementId": 1,
+      "imagePath": "/a3.png",
+      "startDate": "2023-10-15T14:30:00.000Z",
+      "endDate": "2024-10-15T14:30:00.000Z"
+    },
+    {
+      "announcementId": 2,
+      "imagePath": "/a2.png",
+      "startDate": "2023-10-15T14:30:00.000Z",
+      "endDate": "2026-10-15T14:30:00.000Z"
+    },
+    {
+      "announcementId": 3,
+      "imagePath": "/a4.png",
+      "startDate": "2023-10-15T14:30:00.000Z",
+      "endDate": "2026-10-15T14:30:00.000Z"
+    },
+    {
+      "announcementId": 4,
+      "imagePath": "/a5.png",
+      "startDate": "2025-10-15T14:30:00.000Z",
+      "endDate": "2026-10-15T14:30:00.000Z"
+    },
+    {
+      "announcementId": 6,
+      "imagePath": "/a5.png",
+      "startDate": "2023-10-15T14:30:00.000Z",
+      "endDate": "2024-10-15T14:30:00.000Z"
+    },
+    {
+      "announcementId": 5,
+      "imagePath": "/a1.png",
+      "startDate": "2023-10-15T14:30:00.000Z",
+      "endDate": "2024-10-15T14:30:00.000Z"
+    }
+  ],
+  "1": [
+    {
+      "announcementId": 0,
+      "imagePath": "/a1.png",
+      "startDate": "2023-10-15T14:30:00.000Z",
+      "endDate": "2026-10-15T14:30:00.000Z"
+    },
+
+    {
+      "announcementId": 1,
+      "imagePath": "/a3.png",
+      "startDate": "2023-10-15T14:30:00.000Z",
+      "endDate": "2024-10-15T14:30:00.000Z"
+    },
+    {
+      "announcementId": 5,
+      "imagePath": "/a1.png",
+      "startDate": "2023-10-15T14:30:00.000Z",
+      "endDate": "2024-10-15T14:30:00.000Z"
+    }
+  ]
+}

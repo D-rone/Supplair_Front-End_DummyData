@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useUserContext } from "../../../pages/HomePage";
-import { supplairAPI } from "../../../utils/axios";
 
 function Billing() {
   const taxe = 500;
@@ -9,14 +8,36 @@ function Billing() {
   const [invoices, setinvoices] = useState([]);
 
   useEffect(() => {
-    supplairAPI
-      .get(`orders-srv/api/v1/invoices/` + userData.companyName)
-      .then((res) => {
-        setinvoices(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    setinvoices([
+      {
+        id: 4568,
+        companyName: "Solidex",
+        date: "01/06/2025",
+        orderNumber: 132,
+        status: "PENDING",
+      },
+      {
+        id: 4564,
+        companyName: "Solidex",
+        date: "05/04/2025",
+        orderNumber: 56,
+        status: "PAYED",
+      },
+      {
+        id: 4565,
+        companyName: "Solidex",
+        date: "17/03/2025",
+        orderNumber: 11,
+        status: "PENDING",
+      },
+      {
+        id: 4566,
+        companyName: "Solidex",
+        date: "10/01/2025",
+        orderNumber: 7,
+        status: "PAYED",
+      },
+    ]);
   }, []);
 
   const handlePrintInvoice = (invoice) => {
@@ -83,9 +104,7 @@ table {
       printWindow.document.close();
       printWindow.print();
     } else {
-      console.error(
-        "Cannot open print window: document object is not available"
-      );
+      console.error("Cannot open print window: document object is not available");
     }
   };
 
@@ -125,23 +144,17 @@ table {
                   {invoices.map((invoice) => (
                     <React.Fragment key={invoice.id}>
                       <tr>
-                        <td className="px-6 py-4 whitespace-nowrap font-semibold">
-                          {invoice.id}
-                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap font-semibold">{invoice.id}</td>
                         <td className="px-6 py-4 whitespace-nowrap font-semibold">
                           {invoice.date}
                         </td>
-
                         <td className="px-6 py-4 whitespace-nowrap font-semibold">
                           {invoice.orderNumber * taxe}
                         </td>
                         <td
                           className="px-6 py-4 whitespace-nowrap font-semibold"
                           style={{
-                            color:
-                              invoice.status == "PENDING"
-                                ? "#E2B102"
-                                : "#07A104",
+                            color: invoice.status == "PENDING" ? "#E2B102" : "#07A104",
                           }}
                         >
                           {" "}

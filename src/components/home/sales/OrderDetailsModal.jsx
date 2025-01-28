@@ -11,13 +11,7 @@ const formatDate = (dateStr) => {
   return `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`;
 };
 
-const OrderDetailsModal = ({
-  order,
-  orderDetails,
-  onClose,
-  originalStatus,
-  updateOrderStatus,
-}) => {
+const OrderDetailsModal = ({ order, orderDetails, onClose, originalStatus, updateOrderStatus }) => {
   const { userData, setUserData } = useUserContext();
   const [customer, setCustomer] = useState(null);
   const [state, setState] = useState(orderDetails.orderState); // Set initial state to original status
@@ -51,29 +45,16 @@ const OrderDetailsModal = ({
     updateOrderStatus(order.order_number, state, deliveryDate); // Update status in original table
 
     if (payedAmount > orderDetails.totalAmount - orderDetails.payedAmount) {
-      toast.error(
-        "The amount you are trying to pay exceeds the remaining balance."
-      );
+      toast.error("The amount you are trying to pay exceeds the remaining balance.");
       return;
     }
-    if (
-      orderDetails.totalAmount - (orderDetails.payedAmount + payedAmount) ==
-      0
-    ) {
+    if (orderDetails.totalAmount - (orderDetails.payedAmount + payedAmount) == 0) {
       if (state != "PAYED") {
         toast.error("Order state must be payed");
         return;
       }
     }
     try {
-      const response = await supplairAPI.put(
-        `orders-srv/api/v1/supplier/orders/` + order.order_number,
-        {
-          date: deliveryDate,
-          orderState: state,
-          payedAmount: payedAmount,
-        }
-      );
       onClose(); // Close sidebar
     } catch (error) {
       console.error("Error:", error);
@@ -90,7 +71,7 @@ const OrderDetailsModal = ({
       product: detail.product_name,
       quantity: detail.qte,
       unitPrice: detail.product_price,
-      amount: detail.amount,
+      amount: detail.qte * detail.product_price,
     }));
 
     const invoiceData = `
@@ -131,19 +112,19 @@ const OrderDetailsModal = ({
                 <tr>
                   <td>${item.product}</td>
                   <td>${item.quantity}</td>
-                  <td>$${item.unitPrice.toFixed(2)}</td>
-                  <td>$${item.amount.toFixed(2)}</td>
+                  <td>${item.unitPrice}.DA</td>
+                  <td>${item.amount}.DA</td>
                 </tr>
               `
               )
               .join("")}
           </tbody>
         </table>
-        <p><strong>Total Amount:</strong> $${order.totalAmount.toFixed(2)}</p>
-        <p><strong>Payed Amount:</strong> $${order.payedAmount.toFixed(2)}</p>
-        <p><strong>Rest Amount:</strong> $${(
-          order.totalAmount - order.payedAmount
-        ).toFixed(2)}</p>
+        <p><strong>Total Amount:</strong> ${order.totalAmount.toFixed(2)}.DA</p>
+        <p><strong>Payed Amount:</strong> ${order.payedAmount.toFixed(2)}.DA</p>
+        <p><strong>Rest Amount:</strong> ${(order.totalAmount - order.payedAmount).toFixed(
+          2
+        )}.DA</p>
       </body>
       </html>
     `;
@@ -162,26 +143,20 @@ const OrderDetailsModal = ({
             {order.client_name}
           </h2>
           <div>
-            <span className="mt-1 text-lg font-semibold text-black">
-              Email :
-            </span>
+            <span className="mt-1 text-lg font-semibold text-black">Email :</span>
             <span className="mt-1 text-lg font-meduim text-black">
               {" " + orderDetails.customerEmail}
             </span>
           </div>
           <div>
-            <span className="mt-1 text-lg font-semibold text-black">
-              Address :
-            </span>
+            <span className="mt-1 text-lg font-semibold text-black">Address :</span>
             <span className="mt-1 text-lg font-meduim text-black">
               {" " + orderDetails.customerAddress}
             </span>
           </div>
 
           <div className="flex items-center gap-5">
-            <span className="mt-1 text-lg font-semibold text-black">
-              Delivery Date:
-            </span>
+            <span className="mt-1 text-lg font-semibold text-black">Delivery Date:</span>
             <input
               type="date"
               disabled={!userData.hasDeliveryDate}
@@ -210,7 +185,10 @@ const OrderDetailsModal = ({
               className="text-supplair-primary hover:text-supplair-primary-darker"
               onClick={() => onClose()}
             >
-              <FontAwesomeIcon icon={faTimes} className="h-6 w-6" />
+              <FontAwesomeIcon
+                icon={faTimes}
+                className="h-6 w-6"
+              />
             </button>
           </div>
         </div>
@@ -218,9 +196,7 @@ const OrderDetailsModal = ({
 
       <div className="flex-shrink-0 mb-4">
         <div className="mb-1">
-          <span className="mt-1 text-lg font-semibold text-black">
-            Select Order status
-          </span>
+          <span className="mt-1 text-lg font-semibold text-black">Select Order status</span>
         </div>
         <div className="relative inline-block text-left w-full">
           <div>
@@ -322,9 +298,7 @@ const OrderDetailsModal = ({
             <tbody className="bg-white divide-y divide-supplair-primary">
               {orderDetails.productRows.map((detail, index) => (
                 <tr key={index}>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    {detail.product_name}
-                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">{detail.product_name}</td>
                   <td className="px-6 py-4 whitespace-nowrap">{detail.qte}</td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     ${detail.product_price.toFixed(2)}
@@ -341,16 +315,12 @@ const OrderDetailsModal = ({
         <div className="mt-4">
           <div className="flex justify-end">
             <span className="text-lg font-semibold">Total Amount :</span>
-            <span className="text-lg font-medium ml-3">
-              {"$" + orderDetails.totalAmount}
-            </span>
+            <span className="text-lg font-medium ml-3">{"$" + orderDetails.totalAmount}</span>
           </div>
 
           <div className="flex justify-end mt-2">
             <span className="text-lg font-semibold">Payed Amount :</span>
-            <span className="text-lg font-medium ml-3">
-              ${orderDetails.payedAmount}
-            </span>
+            <span className="text-lg font-medium ml-3">${orderDetails.payedAmount}</span>
           </div>
 
           <div className="flex justify-end mt-2">

@@ -1,11 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ClientOrdersSidebar from "./ClientOrdersSidebar";
-import { useUserContext } from "../../../pages/HomePage";
-import { supplairAPI } from "../../../utils/axios";
 
 const ClientsTable = ({ filterOption }) => {
-  const { userData, setUserData } = useUserContext();
-
   const [expandedClient, setExpandedClient] = useState(null);
   const [showSidebar, setShowSidebar] = useState(false);
   const [selectedClient, setSelectedClient] = useState(null);
@@ -14,26 +10,97 @@ const ClientsTable = ({ filterOption }) => {
   const [clientDetails, setClientDetails] = useState({});
 
   useEffect(() => {
-    supplairAPI
-      .get(`orders-srv/api/v1/customers/` + userData.companyName)
-      .then((res) => {
-        setclientsData(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    setclientsData([
+      {
+        name: "Mohamed",
+        state: "Active",
+        email: "medouksili@gmail.com",
+        payment: true,
+      },
+      {
+        name: "Sarah",
+        state: "Inactive",
+        email: "sarah@example.com",
+        payment: false,
+      },
+      {
+        name: "John",
+        state: "Active",
+        email: "john@example.com",
+        payment: true,
+      },
+      {
+        name: "Alice",
+        state: "Blocked",
+        email: "alice@example.com",
+        payment: false,
+      },
+      {
+        name: "David",
+        state: "Active",
+        email: "david@example.com",
+        payment: true,
+      },
+    ]);
   }, []);
   useEffect(() => {
     if (selectedClient) {
-      supplairAPI
-        .get(`orders-srv/api/v1/orders/${userData.companyName}/${selectedClient.name}`)
-        .then((res) => {
-          console.log("hhh");
-          setClientDetails(res.data);
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-        });
+      setClientDetails({
+        name: selectedClient.name,
+        email: selectedClient.email,
+        address: "25 Rue Baghdadi Mohamed",
+        orderRowDtos: [
+          {
+            delivery_date: "15/11/2023",
+            order_number: "1234",
+            client_name: selectedClient.name,
+            totalAmount: 15000,
+            status: "ACCEPTED",
+          },
+          {
+            delivery_date: "20/11/2023",
+            order_number: "5678",
+            client_name: selectedClient.name,
+            totalAmount: 8000,
+            status: "PENDING",
+          },
+          {
+            delivery_date: "25/11/2023",
+            order_number: "9101",
+            client_name: selectedClient.name,
+            totalAmount: 12000,
+            status: "REFUSED",
+          },
+          {
+            delivery_date: "30/11/2023",
+            order_number: "1121",
+            client_name: selectedClient.name,
+            totalAmount: 10000,
+            status: "ORDERED",
+          },
+          {
+            delivery_date: "05/12/2023",
+            order_number: "3141",
+            client_name: selectedClient.name,
+            totalAmount: 18000,
+            status: "ACCEPTED",
+          },
+          {
+            delivery_date: "10/12/2023",
+            order_number: "5161",
+            client_name: selectedClient.name,
+            totalAmount: 9000,
+            status: "PENDING",
+          },
+          {
+            delivery_date: "15/12/2023",
+            order_number: "7181",
+            client_name: selectedClient.name,
+            totalAmount: 14000,
+            status: "ACCEPTED",
+          },
+        ],
+      });
     }
   }, [selectedClient]);
 

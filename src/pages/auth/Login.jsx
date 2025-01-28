@@ -4,10 +4,8 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import { faLock } from "@fortawesome/free-solid-svg-icons";
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import SidePage from "../../components/Side/SidePage";
-import { NavLink } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { supplairAPI } from "../../utils/axios";
 
 library.add(faLock, faEnvelope);
 
@@ -19,19 +17,26 @@ export default function Login() {
     e.preventDefault();
 
     try {
-      const response = await supplairAPI.post(
-        "auth-srv/api/v1/auth/authenticate",
-        {
-          email: email,
-          password: password,
-        }
-      );
-      console.log("Response:", response.data);
-      const { access_token, refresh_token } = response.data;
+      let access_token;
+      switch (email) {
+        case "medouksili@gmail.com":
+          access_token = "user1";
+          break;
+        case "ilyes999@gmail.com":
+          access_token = "user2";
+          break;
+        case "superadmin@gmail.com":
+          access_token = "user3";
+          break;
+        default:
+          access_token = null;
+          break;
+      }
+
       document.cookie = `access_token=${access_token}; path=/`;
-      document.cookie = `refresh_token=${refresh_token}; path=/`;
       toast.dismiss();
-      navigate("/", { replace: true });
+      if (access_token) navigate("/", { replace: true });
+      else toast.error("User doesn't exist");
     } catch (error) {
       toast.error(error.response.data, { autoClose: false });
       return;
@@ -40,9 +45,7 @@ export default function Login() {
   return (
     <>
       <div className="absolute top-0 right-0 mt-2 mr-10">
-        <span className="font-semibold font-Raleway ">
-          Don't have an account ?
-        </span>
+        <span className="font-semibold font-Raleway ">Don't have an account ?</span>
         <span></span>
         <a
           href="/signup"

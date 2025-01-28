@@ -3,7 +3,6 @@ import PopUp1 from "./PopUp16";
 import { toast } from "react-toastify";
 import Cookies from "universal-cookie";
 import { useUserContext } from "../../pages/HomePage";
-import { supplairAPI } from "../../utils/axios";
 
 function AddRolePopup({ close, setUpdate }) {
   const cookies = new Cookies();
@@ -28,20 +27,11 @@ function AddRolePopup({ close, setUpdate }) {
         return;
       }
       try {
-        const response = await supplairAPI.post(
-          `auth-srv/api/v1/roles`,
-          {
-            companyName: userData.companyName,
-            roleName: name,
-            permissions: rights,
-          },
-          {
-            headers: {
-              Authorization: "Bearer " + storedAccessToken,
-            },
-          }
-        );
-        toast.success("Role added");
+        setTimeout(() => {
+          toast.success("Role added");
+          setUpdateGet((prev) => !prev);
+          onClose(false);
+        }, 1000);
       } catch (error) {
         if (error.response) {
           console.error("Server Error:", error.response.data);
@@ -82,7 +72,10 @@ function AddRolePopup({ close, setUpdate }) {
   };
 
   return (
-    <PopUp1 closeMe={closePopup} title="Add Role">
+    <PopUp1
+      closeMe={closePopup}
+      title="Add Role"
+    >
       <div className="p-4">
         <form onSubmit={handleAddRole}>
           <div className="flex flex-col gap-1 mb-6 text-sm font-semibold">
@@ -155,15 +148,17 @@ function AddRolePopup({ close, setUpdate }) {
             </div>
           </div>
           <div className="flex justify-end gap-5">
-            <button onClick={closePopup} className="cancelBtn" type="button">
+            <button
+              onClick={closePopup}
+              className="cancelBtn"
+              type="button"
+            >
               Cancel
             </button>
             <input
               type="submit"
               value="Save"
-              className={`${
-                updated ? `hover:cursor-pointer approveBtn` : "cancelBtn"
-              } `}
+              className={`${updated ? `hover:cursor-pointer approveBtn` : "cancelBtn"} `}
             />
           </div>
         </form>

@@ -5,7 +5,6 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import SidePage from "../../components/Side/SidePage";
 import { toast } from "react-toastify";
-import { supplairAPI } from "../../utils/axios";
 library.add(faEnvelope);
 
 export default function ResetPwd() {
@@ -27,12 +26,6 @@ export default function ResetPwd() {
     }
     setLoaded(!loaded);
     try {
-      const response = await supplairAPI.post(
-        "auth-srv/api/v1/auth/send-email",
-        {
-          email: email,
-        }
-      );
       toast.dismiss();
       toast.success("Check your email", { autoClose: false });
       setLoaded(false);

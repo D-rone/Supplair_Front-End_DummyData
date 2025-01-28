@@ -1,0 +1,47 @@
+{
+  "user1": {
+    "userId": 1651561,
+    "name": "Mohamed Ouksili",
+    "email": "medouksili@gmail.com",
+    "permissions": ["HOME", "INVENTORY", "SALES", "ANNOUNCEMENT", "USERS", "BILLING"],
+    "companyId": 48664,
+    "companyName": "Test Company",
+    "address": "25 Baghdadi Mohamed Street",
+    "hasDeliveryDate": true,
+    "number": "(+213) 669 29 19 46",
+    "description": "Test Company",
+    "companyEmail": "contact@test.com",
+    "categories": ["SEAFOOD", "MEAT_AND_POULTRY"],
+    "wilayas": ["Adrar", "Oran"]
+  },
+  "user2": {
+    "userId": 1651561,
+    "name": "Ilyes Ouadeh",
+    "email": "ilyes9999@gmail.com",
+    "permissions": ["HOME", "ANNOUNCEMENT", "BILLING"],
+    "companyId": 48664,
+    "companyName": "Test Company",
+    "address": "25 Baghdadi Mohamed Street",
+    "hasDeliveryDate": true,
+    "number": "(+213) 669 29 19 46",
+    "description": "Test Company",
+    "companyEmail": "contact@test.com",
+    "categories": ["SEAFOOD", "MEAT_AND_POULTRY"],
+    "wilayas": ["Adrar", "Oran"]
+  },
+  "user3": {
+    "userId": 1651561,
+    "name": "Mohamed Ouksili",
+    "email": "superadmin@gmail.com",
+    "permissions": ["SUPERADMIN"],
+    "companyId": 48664,
+    "companyName": "Test Company",
+    "address": "25 Baghdadi Mohamed Street",
+    "hasDeliveryDate": true,
+    "number": "(+213) 669 29 19 46",
+    "description": "Test Company",
+    "companyEmail": "contact@test.com",
+    "categories": ["SEAFOOD", "MEAT_AND_POULTRY"],
+    "wilayas": ["Adrar", "Oran"]
+  }
+}

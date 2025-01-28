@@ -2,11 +2,10 @@ import React, { useEffect, useState } from "react";
 import AddProductPopup from "../../pupups/AddProductPopup";
 import _defaultPic from "../../../assets/images/noProfilePic.png";
 import ProductsTable from "./ProductsTable";
-import { supplairAPI } from "../../../utils/axios";
 import { ScaleLoader } from "react-spinners";
 import Pagination from "../../utils/Pagination";
-import Cookies from "universal-cookie";
 import UpdateProductPopup from "../../pupups/UpdateProductPopup";
+import dummyData from "./dummyData.json";
 
 function Products() {
   const [products, setProducts] = useState([]);
@@ -25,62 +24,35 @@ function Products() {
 
   let makeRequest = (page) => {
     setLoading(true);
-    const cookies = new Cookies();
-    const storedAccessToken = cookies.get("access_token");
 
-    supplairAPI
-      .get(
-        "products-srv/query/supplier/myProducts?filter=" +
-          filterStatus +
-          "&page=" +
-          page +
-          "&size=8",
-        {
-          headers: {
-            Authorization: `Bearer ${storedAccessToken}`,
-          },
-        }
-      )
-      .then((data) => {
-        setProducts(data?.data?.content);
-        setTotalPages(data?.data?.totalPages);
-        setLoading(false);
-      })
-      .catch((err) => {
-        if (Math.floor(err?.response?.status / 100) == 5) toast.error("Server Error");
-        else toast.error(err.message);
-        setLoading(false);
-      });
+    setTimeout(() => {
+      setProducts(
+        filterStatus == "all"
+          ? dummyData.p[page]
+          : filterStatus == "available"
+          ? dummyData.qa[page]
+          : dummyData.q0[page]
+      );
+      setTotalPages(filterStatus == "all" ? 4 : 2);
+      console.log(totalPages);
+      setLoading(false);
+    }, 1000);
   };
 
   const [categories, setCategories] = useState([]);
   const [groups, setGroups] = useState([]);
   useEffect(() => {
-    const cookies = new Cookies();
-    const storedAccessToken = cookies.get("access_token");
-
-    supplairAPI
-      .get("products-srv/query/supplier/myProductsGroups?page=0&size=100", {
-        headers: {
-          Authorization: `Bearer ${storedAccessToken}`,
-        },
-      })
-      .then((data) => {
-        const result = data?.data?.content.reduce((acc, item) => {
-          const { categoryId, name, productsGroupId } = item;
-          if (!acc[categoryId]) {
-            acc[categoryId] = [];
-          }
-          acc[categoryId].push({ name, productsGroupId });
-          return acc;
-        }, {});
-        setCategories(result);
-        setGroups(data?.data?.content);
-      })
-      .catch((err) => {
-        if (Math.floor(err?.response?.status / 100) == 5) toast.error("Server Error");
-        else toast.error(err.message);
-      });
+    const result = dummyData.gp[0].reduce((acc, item) => {
+      const { categoryId, name, productsGroupId } = item;
+      if (!acc[categoryId]) {
+        acc[categoryId] = [];
+      }
+      acc[categoryId].push({ name, productsGroupId });
+      return acc;
+    }, {});
+    console.log(result);
+    setCategories(result);
+    // setGroups(data?.data?.content);
   }, []);
 
   useEffect(() => {

@@ -78,13 +78,6 @@ function CompanyProfile({
     setUpdatedData((old) => ({ ...old, wilayas: selectedWilayas }));
   }, [selectedWilayas, hasDeliveryDates]);
 
-  useEffect(() => {
-    if (!hasDeliveryDates) {
-      setUpdatedData((old) => ({ ...old, wilayas: [] }));
-      setSelectedWilayas([]);
-    }
-  }, [hasDeliveryDates]);
-
   const handleWilayaChange = (wilaya) => {
     setSelectedWilayas((selectedWilayas) => {
       if (selectedWilayas.includes(wilaya)) {
@@ -203,10 +196,17 @@ function CompanyProfile({
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
           >
-            <img src={companyPic} alt="Profile Picture" className="rounded-full size-44" />
+            <img
+              src={companyPic}
+              alt="Profile Picture"
+              className="rounded-full size-44"
+            />
             {hovered && (
               <div className="absolute top-0 left-0 bg-black rounded-full size-full bg-opacity-30">
-                <input type="file" className="hidden" />
+                <input
+                  type="file"
+                  className="hidden"
+                />
                 <input
                   type="file"
                   className="rounded-full opacity-0 size-44 hover:cursor-pointer"
@@ -223,7 +223,10 @@ function CompanyProfile({
 
         <div className="w-2/3">
           <div className="flex px-8 py-4 border-b-2 border-gray-300">
-            <span className="w-1/3" style={{ fontWeight: "700" }}>
+            <span
+              className="w-1/3"
+              style={{ fontWeight: "700" }}
+            >
               Company Name
             </span>
 
@@ -266,7 +269,10 @@ function CompanyProfile({
           </div>
 
           <div className="flex px-8 py-4 border-b-2 border-gray-300">
-            <span className="w-1/3" style={{ fontWeight: "700" }}>
+            <span
+              className="w-1/3"
+              style={{ fontWeight: "700" }}
+            >
               Address
             </span>
 
@@ -309,7 +315,10 @@ function CompanyProfile({
           </div>
 
           <div className="flex px-8 py-4 border-b-2 border-gray-300">
-            <span className="w-1/3" style={{ fontWeight: "700" }}>
+            <span
+              className="w-1/3"
+              style={{ fontWeight: "700" }}
+            >
               Phone
             </span>
             <div className="w-2/3">
@@ -354,7 +363,10 @@ function CompanyProfile({
             className="flex px-8 py-4 border-b-2 border-gray-300"
             style={{ alignItems: "flex-start", marginBottom: "1rem" }}
           >
-            <span className="w-4/6" style={{ fontWeight: "700" }}>
+            <span
+              className="w-4/6"
+              style={{ fontWeight: "700" }}
+            >
               Does the company have delivery dates?
             </span>
             <div className="w-2/6">
@@ -362,32 +374,41 @@ function CompanyProfile({
                 id="deliveryDatesYes"
                 name="deliveryDates"
                 type="radio"
-                className="h-4 w-4 text-supplair-primary border-gray-300 focus:ring-supplair-primary mr-1"
+                className="w-4 h-4 mr-1 border-gray-300 text-supplair-primary focus:ring-supplair-primary"
                 checked={hasDeliveryDates === true}
                 onChange={() => {
                   handleUpdate("hasDeliveryDates");
                 }}
               />
-              <label htmlFor="deliveryDatesYes" className="text-gray-500 mr-4">
+              <label
+                htmlFor="deliveryDatesYes"
+                className="mr-4 text-gray-500"
+              >
                 Yes
               </label>
               <input
                 id="deliveryDatesNo"
                 name="deliveryDates"
                 type="radio"
-                className="h-4 w-4 text-supplair-primary border-gray-300 focus:ring-supplair-primary mr-1"
+                className="w-4 h-4 mr-1 border-gray-300 text-supplair-primary focus:ring-supplair-primary"
                 checked={hasDeliveryDates === false}
                 onChange={() => {
                   handleUpdate("hasDeliveryDates");
                 }}
               />
-              <label htmlFor="deliveryDatesNo" className="text-gray-500">
+              <label
+                htmlFor="deliveryDatesNo"
+                className="text-gray-500"
+              >
                 No
               </label>
             </div>
           </div>
           <div className="flex px-8 py-4 border-b-2 border-gray-300">
-            <span className="w-1/3" style={{ fontWeight: "700" }}>
+            <span
+              className="w-1/3"
+              style={{ fontWeight: "700" }}
+            >
               Company email
             </span>
 
@@ -430,7 +451,10 @@ function CompanyProfile({
           </div>
           {/* */}
           <div className="flex px-8 py-4 border-b-2 border-gray-300">
-            <span className="w-1/3" style={{ fontWeight: "700" }}>
+            <span
+              className="w-1/3"
+              style={{ fontWeight: "700" }}
+            >
               Description
             </span>
 
@@ -480,28 +504,37 @@ function CompanyProfile({
           </div>
           {/* New Checkboxes for Wilayas */}
           <div className="flex px-8 py-4 border-b-2 border-gray-300 ">
-            <label style={{ fontWeight: "700" }} className="w-5/12">
+            <label
+              style={{ fontWeight: "700" }}
+              className="w-5/12"
+            >
               Select Wilayas for Delivery:
             </label>
-            <div className="grid grid-cols-1 gap-2 max-h-40 overflow-y-scroll w-7/12">
+            <div className="grid w-7/12 grid-cols-1 gap-2 overflow-y-scroll max-h-40">
               <div
-                className="overflow-y-scroll border border-gray-300 rounded-xl p-2"
+                className="p-2 overflow-y-scroll border border-gray-300 rounded-xl"
                 style={{ height: "100px", width: "95%" }}
               >
                 {wilayas.map((wilaya) => (
-                  <div key={wilaya.value} className="flex items-center w-12/12">
+                  <div
+                    key={wilaya.value}
+                    className="flex items-center w-12/12"
+                  >
                     <input
                       id={`wilaya-${wilaya.value}`}
                       type="checkbox"
-                      disabled={edit !== "wilayas" || !hasDeliveryDates}
-                      className="h-4 w-4 text-supplair-primary border-gray-300 focus:ring-supplair-primary mr-2"
+                      disabled={edit !== "wilayas"}
+                      className="w-4 h-4 mr-2 border-gray-300 text-supplair-primary focus:ring-supplair-primary"
                       checked={selectedWilayas.includes(wilaya.label)}
                       onChange={() => {
                         console.log(wilaya.label);
                         handleWilayaChange(wilaya.label);
                       }}
                     />
-                    <label htmlFor={`wilaya-${wilaya.value}`} className="text-gray-500">
+                    <label
+                      htmlFor={`wilaya-${wilaya.value}`}
+                      className="text-gray-500"
+                    >
                       {wilaya.label}
                     </label>
                   </div>
@@ -528,15 +561,18 @@ function CompanyProfile({
               )}
             </span>
           </div>
-          <div className="flex px-8 py-4 justify-end">
+          <div className="flex justify-end px-8 py-4">
             <button
-              className="cancelBtn mr-2"
+              className="mr-2 cancelBtn"
               type="button"
               onClick={() => window.location.reload()}
             >
               Cancel
             </button>
-            <button onClick={hundleSave} className="hover:cursor-pointer approveBtn">
+            <button
+              onClick={hundleSave}
+              className="hover:cursor-pointer approveBtn"
+            >
               Save
             </button>
           </div>

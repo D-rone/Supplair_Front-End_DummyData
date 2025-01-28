@@ -1,0 +1,74 @@
+{
+  "invoices": [
+    {
+      "id": "456",
+      "companyName": "SolidEx",
+      "date": "12/03/2024",
+      "orderNumber": "456",
+      "status": "Payed"
+    },
+    {
+      "id": "457",
+      "companyName": "TechCorp",
+      "date": "11/15/2024",
+      "orderNumber": "457",
+      "status": "Pending"
+    },
+    {
+      "id": "458",
+      "companyName": "Innovatech",
+      "date": "10/22/2024",
+      "orderNumber": "458",
+      "status": "Payed"
+    },
+    {
+      "id": "459",
+      "companyName": "GreenSolutions",
+      "date": "09/30/2024",
+      "orderNumber": "459",
+      "status": "Overdue"
+    },
+    {
+      "id": "460",
+      "companyName": "FutureTech",
+      "date": "08/18/2024",
+      "orderNumber": "460",
+      "status": "Payed"
+    },
+    {
+      "id": "461",
+      "companyName": "EcoWorld",
+      "date": "07/25/2024",
+      "orderNumber": "461",
+      "status": "Pending"
+    },
+    {
+      "id": "462",
+      "companyName": "NextGen",
+      "date": "06/14/2024",
+      "orderNumber": "462",
+      "status": "Payed"
+    },
+    {
+      "id": "463",
+      "companyName": "AlphaTech",
+      "date": "05/03/2024",
+      "orderNumber": "463",
+      "status": "Overdue"
+    },
+    {
+      "id": "464",
+      "companyName": "BetaCorp",
+      "date": "04/12/2024",
+      "orderNumber": "464",
+      "status": "Payed"
+    },
+    {
+      "id": "465",
+      "companyName": "GammaIndustries",
+      "date": "03/21/2024",
+      "orderNumber": "465",
+      "status": "Pending"
+    }
+  ]
+}

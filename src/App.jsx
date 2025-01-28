@@ -3,12 +3,13 @@ import { router } from "./routers/mainRouter.jsx";
 import { createContext, useContext, useEffect, useState } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Suspense } from "react";
+import { ScaleLoader } from "react-spinners";
 
 const ScreenContext = createContext();
 export const useScreenContext = () => useContext(ScreenContext);
 
 function App() {
-
   // Show top par text logo
   const [showLogoText, setShowLogoText] = useState(false);
   // Display side bar in authentication pages
@@ -32,12 +33,12 @@ function App() {
 
   return (
     <>
-      <ScreenContext.Provider
-        value={{ showLogoText, authSideBar }}
-      >
+      <Suspense fallback={<ScaleLoader />}>
+        <ScreenContext.Provider value={{ showLogoText, authSideBar }}>
           <RouterProvider router={router} />
-      </ScreenContext.Provider>
-      <ToastContainer />
+        </ScreenContext.Provider>
+        <ToastContainer />
+      </Suspense>
     </>
   );
 }

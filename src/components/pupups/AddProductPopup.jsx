@@ -1,10 +1,8 @@
-import React, { useEffect, useReducer, useState } from "react";
+import React, { useReducer, useState } from "react";
 import PopUp1 from "./PopUp1";
 import { toast } from "react-toastify";
 import { FaDownload } from "react-icons/fa6";
 import { v4 } from "uuid";
-import { fileUpload, supplairAPI } from "../../utils/axios";
-import Cookies from "universal-cookie";
 import { ClockLoader } from "react-spinners";
 
 function AddProductPopup({ close, product, categories, setUpdateGet }) {
@@ -45,51 +43,11 @@ function AddProductPopup({ close, product, categories, setUpdateGet }) {
           formDataRequest.append("files", image);
         });
         setLoading(true);
-        fileUpload
-          .post("/api/upload/products", formDataRequest, {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          })
-          .then((response) => {
-            const imagePaths = response.data;
-
-            const cookies = new Cookies();
-            const storedAccessToken = cookies.get("access_token");
-            supplairAPI
-              .post(
-                "/products-srv/command/products_group/" + formData.productsGroupId + "/product",
-                {
-                  name: formData.name,
-                  reference: formData.reference,
-                  price: formData.price,
-                  description: formData.description,
-                  quantity: formData.quantity,
-                  minimumQuantity: formData.minimumQuantity,
-                  imagePaths: imagePaths,
-                },
-                {
-                  headers: {
-                    Authorization: `Bearer ${storedAccessToken}`,
-                  },
-                }
-              )
-              .then((response) => {
-                toast.success(response.data);
-                setUpdateGet((prev) => !prev);
-                close(false);
-              })
-              .catch((err) => {
-                toast.error(err.message);
-              });
-          })
-          .catch((err) => {
-            toast.error(err.message);
-            setUpdated(true);
-          })
-          .finally(() => {
-            setLoading(false);
-          });
+        setTimeout(() => {
+          toast.success("Successful");
+          setUpdateGet((prev) => !prev);
+          onClose(false);
+        }, 1000);
       } else {
         toast.error("Each Product should have at least one image");
       }
@@ -127,8 +85,14 @@ function AddProductPopup({ close, product, categories, setUpdateGet }) {
   };
 
   return (
-    <PopUp1 closeMe={closePopup} title="Add Product">
-      <form onSubmit={handleAddProduct} className="p-4">
+    <PopUp1
+      closeMe={closePopup}
+      title="Add Product"
+    >
+      <form
+        onSubmit={handleAddProduct}
+        className="p-4"
+      >
         <div className="max-h-[60vh] overflow-y-scroll">
           <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
             {/* First Column */}
@@ -199,10 +163,16 @@ function AddProductPopup({ close, product, categories, setUpdateGet }) {
                   {Object.entries(categories).map(([category, groups]) => {
                     return (
                       <>
-                        <optgroup key={v4()} label={category}>
+                        <optgroup
+                          key={v4()}
+                          label={category}
+                        >
                           {groups.map((group) => {
                             return (
-                              <option key={v4()} value={group.productsGroupId}>
+                              <option
+                                key={v4()}
+                                value={group.productsGroupId}
+                              >
                                 {group.name}
                               </option>
                             );
@@ -291,7 +261,11 @@ function AddProductPopup({ close, product, categories, setUpdateGet }) {
           </div>
         </div>
         <div className="flex justify-end gap-5 mt-6">
-          <button onClick={closePopup} className="cancelBtn" type="button">
+          <button
+            onClick={closePopup}
+            className="cancelBtn"
+            type="button"
+          >
             Cancel
           </button>
           <input

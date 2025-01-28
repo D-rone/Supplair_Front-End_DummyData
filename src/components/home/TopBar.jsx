@@ -11,8 +11,6 @@ import { useScreenContext } from "../../App";
 import { useUserContext } from "../../pages/HomePage";
 import Cookies from "universal-cookie";
 import { useNavigate } from "react-router-dom";
-import { supplairAPI } from "../../utils/axios";
-
 
 function TopBar({ profileDropdown, setProfileDropdown }) {
   const cookies = new Cookies();
@@ -69,7 +67,10 @@ function TopBar({ profileDropdown, setProfileDropdown }) {
   const renderSearchCustomers = () => {
     if (searchQuery === "") return null;
     return searchCustomers.map((result) => (
-      <div className="text-base font-medium my-2 cursor-pointer" key={result.id}>
+      <div
+        className="my-2 text-base font-medium cursor-pointer"
+        key={result.id}
+      >
         {result.title}
       </div>
     ));
@@ -77,24 +78,22 @@ function TopBar({ profileDropdown, setProfileDropdown }) {
   const renderSearchProducts = () => {
     if (searchQuery === "") return null;
     return searchProducts.map((result) => (
-      <div className="text-base font-medium my-2 cursor-pointer" key={result.id}>
+      <div
+        className="my-2 text-base font-medium cursor-pointer"
+        key={result.id}
+      >
         {result.title}
       </div>
     ));
   };
 
   const { showLogoText } = useScreenContext();
+  const navigate = useNavigate();
 
   let logout = async () => {
     try {
-      const response = await supplairAPI.post(`auth-srv/api/v1/logout/` + storedAccessToken, {
-        headers: {
-          Authorization: "Bearer " + storedAccessToken,
-        },
-      });
       cookies.remove("access_token", { path: "/" });
-      cookies.remove("refresh_token", { path: "/" });
-      window.location.reload();
+      navigate("/login");
     } catch (error) {
       console.error("Error:", error);
     }
@@ -113,13 +112,23 @@ function TopBar({ profileDropdown, setProfileDropdown }) {
         {showLogoText ? (
           <div className="relative left-[10%] w-fit hover:cursor-pointer">
             <NavLink to={"/"}>
-              <img src={_LogoInline} id="topBar_logo" alt="" className="inline h-8 mr-2" />
+              <img
+                src={_LogoInline}
+                id="topBar_logo"
+                alt=""
+                className="inline h-8 mr-2"
+              />
             </NavLink>
           </div>
         ) : (
           <div className="flex justify-center w-full hover:cursor-pointer">
             <NavLink to={"/"}>
-              <img src={_logoIcon} id="topBar_logo" alt="" className="inline h-8 mr-2" />
+              <img
+                src={_logoIcon}
+                id="topBar_logo"
+                alt=""
+                className="inline h-8 mr-2"
+              />
             </NavLink>
           </div>
         )}
@@ -127,8 +136,12 @@ function TopBar({ profileDropdown, setProfileDropdown }) {
       {/* Search Bar */}
       <div className="w-2/5">
         <form onSubmit={handleSearchSubmit}>
-          <div className="flex items-center w-full h-10 p-2 bg-white border-2 rounded-md relative">
-            <img src={_search} alt="" className="h-7 hover:cursor-pointer" />
+          <div className="relative flex items-center w-full h-10 p-2 bg-white border-2 rounded-md">
+            <img
+              src={_search}
+              alt=""
+              className="h-7 hover:cursor-pointer"
+            />
             <input
               type="text"
               placeholder="Search ..."
@@ -140,14 +153,14 @@ function TopBar({ profileDropdown, setProfileDropdown }) {
               <></>
             ) : (
               <div
-                className="absolute left-0 right-0 top-full bg-white p-2 border border-gray-300 border-solid border-t-0 border-b border-l-0 border-r-0 rounded-b-lg overflow-scroll"
+                className="absolute left-0 right-0 p-2 overflow-scroll bg-white border border-t-0 border-b border-l-0 border-r-0 border-gray-300 border-solid rounded-b-lg top-full"
                 style={{ maxHeight: "400px" }}
               >
                 {" "}
                 <h6 className="text-sm text-gray-400">Customers</h6>
                 {renderSearchCustomers()}
-                <div className="w-full h-px bg-gray-300 my-2"></div>
-                <h6 className=" text-sm text-gray-400">Products</h6>
+                <div className="w-full h-px my-2 bg-gray-300"></div>
+                <h6 className="text-sm text-gray-400 ">Products</h6>
                 {renderSearchProducts()}
               </div>
             )}
@@ -161,7 +174,10 @@ function TopBar({ profileDropdown, setProfileDropdown }) {
         </div>
 
         <div>
-          <img src={_bell} className="h-6 m-3 hover:cursor-pointer opacity-80" />
+          <img
+            src={_bell}
+            className="h-6 m-3 hover:cursor-pointer opacity-80"
+          />
         </div>
 
         <div className="p-4">

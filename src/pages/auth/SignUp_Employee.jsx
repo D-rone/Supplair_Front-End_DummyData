@@ -8,7 +8,6 @@ import SidePage from "../../components/Side/SidePage";
 import { toast } from "react-toastify";
 import { NavLink } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { supplairAPI } from "../../utils/axios";
 
 library.add(faEnvelope, faLock, faBuilding);
 
@@ -47,14 +46,6 @@ export default function SignUp_Employee() {
       return;
     }
     try {
-      const response = await supplairAPI.put(
-        "auth-srv/api/v1/auth/authenticate-as-invited",
-        {
-          email: email,
-          password: password,
-        }
-      );
-      console.log("Response:", response.data);
       const { access_token, refresh_token } = response.data;
       document.cookie = `access_token=${access_token}; path=/`;
       document.cookie = `refresh_token=${refresh_token}; path=/`;

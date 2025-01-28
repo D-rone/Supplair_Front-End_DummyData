@@ -4,16 +4,8 @@ import _defualtPic from "../../../assets/images/noProfilePic.png";
 import { v4 } from "uuid";
 import UpdateUserPopup from "../../pupups/UpdateUserPopup";
 import InviteUserPopup from "../../pupups/InviteUserPopup";
-import { toast } from "react-toastify";
-import { useUserContext } from "../../../pages/HomePage";
-import Cookies from "universal-cookie";
-import { supplairAPI } from "../../../utils/axios";
 
 function Users() {
-  const cookies = new Cookies();
-  const storedAccessToken = cookies.get("access_token");
-  const formData = new FormData();
-  const { userData, setUserData } = useUserContext();
   const [allUsers, setAllUsers] = useState([]);
   const [users, setUsers] = useState([]);
   const [reload, setReload] = useState(false);
@@ -22,21 +14,53 @@ function Users() {
   const [showDetails, setShowDetails] = useState(null);
 
   useEffect(() => {
-    supplairAPI
-      .get(`auth-srv/api/v1/users/` + userData.companyId, {
-        headers: {
-          Authorization: "Bearer " + storedAccessToken,
-        },
-      })
-      .then((res) => {
-        console.log(res.data);
-        setAllUsers(res.data);
-        setUsers(res.data);
-        setShowDetails(null);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    const usersList = [
+      {
+        stateType: "ACTIVE",
+        profilePic: null,
+        fullname: "John Doe",
+        roleName: "Role 1",
+        email: "john.doe@example.com",
+      },
+      {
+        stateType: "INACTIVE",
+        profilePic: null,
+        fullname: "Jane Smith",
+        roleName: "Role 2",
+        email: "jane.smith@example.com",
+      },
+      {
+        stateType: "ACTIVE",
+        profilePic: null,
+        fullname: "Alice Johnson",
+        roleName: "Role 3",
+        email: "alice.johnson@example.com",
+      },
+      {
+        stateType: "ACTIVE",
+        profilePic: null,
+        fullname: "Bob Brown",
+        roleName: "Role 4",
+        email: "bob.brown@example.com",
+      },
+      {
+        stateType: "ACTIVE",
+        profilePic: null,
+        fullname: "Charlie Davis",
+        roleName: "Role 5",
+        email: "charlie.davis@example.com",
+      },
+      {
+        stateType: "INACTIVE",
+        profilePic: null,
+        fullname: "Eve Wilson",
+        roleName: "Role 6",
+        email: "eve.wilson@example.com",
+      },
+    ];
+    setAllUsers(usersList);
+    setUsers(usersList);
+    setShowDetails(null);
   }, [reload]);
 
   let getUsers = (state) => {
@@ -95,7 +119,7 @@ function Users() {
                 }`}
                 key={v4()}
               >
-                <td className="p-2 hover:cursor-pointer">
+                <td className="p-2">
                   <img
                     src={user.profilePic || _defualtPic}
                     className="inline h-12 mx-4 border-2 rounded-full border-supplair-primary"
@@ -128,7 +152,11 @@ function Users() {
                     setShowDetails(user.email);
                   }}
                 >
-                  <img src={showMore} alt="" className="w-6" />
+                  <img
+                    src={showMore}
+                    alt=""
+                    className="w-6"
+                  />
                 </td>
               </tr>
             ))}

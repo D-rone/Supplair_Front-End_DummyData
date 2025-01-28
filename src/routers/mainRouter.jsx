@@ -1,5 +1,5 @@
-import { Navigate, createBrowserRouter, useNavigate } from "react-router-dom";
-import { lazy, useEffect } from "react";
+import { Navigate, createBrowserRouter } from "react-router-dom";
+import { lazy } from "react";
 
 const SignUp = lazy(() => import("../pages/auth/SignUp"));
 
@@ -18,8 +18,6 @@ import Forbidden from "../components/Forbidden";
 
 const ProductsByGroup = lazy(() => import("../components/home/inventory/ProductsByGroup"));
 
-const SuperAdmin = lazy(() => import("../components/super-admin/SuperAdmin"));
-
 const Profile = lazy(() => import("../components/profile/Profile"));
 
 const Dashboard = lazy(() => import("../components/home/dashboard/Dashboard"));
@@ -32,22 +30,20 @@ const Users = lazy(() => import("../components/home/users_roles/Users"));
 const Roles = lazy(() => import("../components/home/users_roles/Roles"));
 const Billing = lazy(() => import("../components/home/billing/Billing"));
 
-const SuperAdminAccounts = lazy(() =>
-  import("../components/super-admin/accounts/Accounts")
-);
-const SuperAdminUsers = lazy(() =>
-  import("../components/super-admin/users/Users")
-);
-const SuperAdminBilling = lazy(() =>
-  import("../components/super-admin/billing/Billing")
-);
+const SuperAdminAccounts = lazy(() => import("../components/super-admin/accounts/Accounts"));
+const SuperAdminBilling = lazy(() => import("../components/super-admin/billing/Billing"));
 
 function CheckPermission({ requiredPermission, children }) {
   const { userData } = useUserContext();
   const { permissions } = userData;
   if (permissions.includes(requiredPermission)) return children;
   else {
-    return <Navigate to={"/forbidden"} replace />;
+    return (
+      <Navigate
+        to={"/forbidden"}
+        replace
+      />
+    );
   }
 }
 

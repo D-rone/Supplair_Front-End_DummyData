@@ -1,0 +1,606 @@
+{
+  "gp": {
+    "0": [
+      {
+        "productsGroupId": "101",
+        "name": "Electronics",
+        "categoryId": "5",
+        "productsIds": ["3", "5", "7", "9", "11", "13"]
+      },
+      {
+        "productsGroupId": "202",
+        "name": "Furniture",
+        "categoryId": "2",
+        "productsIds": ["2", "4", "6", "8", "10", "5", "7", "9", "11", "12"]
+      },
+      {
+        "productsGroupId": "303",
+        "name": "Toys",
+        "categoryId": "3",
+        "productsIds": ["14", "15", "16", "17", "18", "19"]
+      },
+      {
+        "productsGroupId": "404",
+        "name": "Books",
+        "categoryId": "4",
+        "productsIds": [
+          "20",
+          "5",
+          "7",
+          "9",
+          "11",
+          "5",
+          "7",
+          "9",
+          "11",
+          "5",
+          "7",
+          "9",
+          "11",
+          "21",
+          "22",
+          "23",
+          "24",
+          "25"
+        ]
+      },
+      {
+        "productsGroupId": "505",
+        "name": "Stationery",
+        "categoryId": "6",
+        "productsIds": [
+          "26",
+          "27",
+          "28",
+          "29",
+          "30",
+          "5",
+          "7",
+          "9",
+          "11",
+          "5",
+          "7",
+          "9",
+          "11",
+          "5",
+          "7",
+          "9",
+          "11",
+          "5",
+          "7",
+          "9",
+          "11",
+          "5",
+          "7",
+          "9",
+          "11",
+          "5",
+          "7",
+          "9",
+          "11",
+          "5",
+          "7",
+          "9",
+          "11",
+          "5",
+          "7",
+          "9",
+          "11",
+          "31"
+        ]
+      },
+      {
+        "productsGroupId": "606",
+        "name": "Gardening",
+        "categoryId": "7",
+        "productsIds": ["32", "33", "34", "37"]
+      },
+      {
+        "productsGroupId": "707",
+        "name": "Kitchenware",
+        "categoryId": "8",
+        "productsIds": ["38"]
+      },
+      {
+        "productsGroupId": "808",
+        "name": "Sports",
+        "categoryId": "9",
+        "productsIds": ["44", "45", "46", "47", "48", "49"]
+      }
+    ],
+    "1": [
+      {
+        "productsGroupId": "909",
+        "name": "Music",
+        "categoryId": "10",
+        "productsIds": ["50", "51", "52", "54", "55"]
+      },
+      {
+        "productsGroupId": "1010",
+        "name": "Movies",
+        "categoryId": "11",
+        "productsIds": ["56", "57", "58", "58", "58", "58", "59", "60", "61"]
+      },
+      {
+        "productsGroupId": "1111",
+        "name": "Art",
+        "categoryId": "12",
+        "productsIds": ["62", "63", "66", "67"]
+      }
+    ]
+  },
+  "p": {
+    "0": [
+      {
+        "productId": 1,
+        "quantity": 500,
+        "minimumQuantity": 10,
+        "name": "Product 1",
+        "price": 1500,
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+        "images": ["product.png", "product.png"]
+      },
+      {
+        "productId": 2,
+        "quantity": 300,
+        "minimumQuantity": 5,
+        "name": "Product 2",
+        "price": 2000,
+        "description": "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+        "images": []
+      },
+      {
+        "productId": 3,
+        "quantity": 800,
+        "minimumQuantity": 15,
+        "name": "Product 3",
+        "price": 2500,
+        "imagePaths": ["product.png"],
+        "description": "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.",
+        "images": ["product.png", "product.png", "product.png"]
+      },
+      {
+        "productId": 4,
+        "quantity": 0,
+        "minimumQuantity": 20,
+        "imagePaths": ["product.png"],
+        "name": "Product 4",
+        "price": 1800,
+        "description": "Nisi ut aliquip ex ea commodo consequat.",
+        "images": ["product.png"]
+      },
+      {
+        "productId": 5,
+        "quantity": 600,
+        "minimumQuantity": 12,
+        "name": "Product 5",
+        "price": 2200,
+        "imagePaths": ["product.png"],
+        "description": "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore.",
+        "images": ["product.png", "product.png", "product.png", "product.png"]
+      },
+      {
+        "productId": 6,
+        "quantity": 0,
+        "minimumQuantity": 8,
+        "name": "Product 6",
+        "price": 1600,
+        "description": "Eu fugiat nulla pariatur.",
+        "images": ["product.png", "product.png", "product.png", "product.png", "product.png"]
+      },
+      {
+        "productId": 7,
+        "quantity": 0,
+        "minimumQuantity": 18,
+        "name": "Product 7",
+        "price": 2100,
+        "imagePaths": ["product.png"],
+        "description": "Excepteur sint occaecat cupidatat non proident.",
+        "images": ["product.png"]
+      }
+    ],
+    "1": [
+      {
+        "productId": 8,
+        "quantity": 0,
+        "minimumQuantity": 25,
+        "name": "Product 8",
+        "price": 2300,
+        "description": "Sunt in culpa qui officia deserunt mollit anim id est laborum.",
+        "images": ["product.png", "product.png", "product.png"]
+      },
+      {
+        "productId": 9,
+        "quantity": 550,
+        "minimumQuantity": 10,
+        "name": "Product 9",
+        "price": 1700,
+        "imagePaths": ["product.png"],
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+        "images": ["product.png", "product.png"]
+      },
+      {
+        "productId": 10,
+        "quantity": 0,
+        "minimumQuantity": 14,
+        "name": "Product 10",
+        "price": 1900,
+        "description": "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+        "images": ["product.png", "product.png", "product.png", "product.png"]
+      },
+      {
+        "productId": 11,
+        "quantity": 750,
+        "minimumQuantity": 16,
+        "name": "Product 11",
+        "price": 2400,
+        "description": "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.",
+        "images": ["product.png", "product.png"]
+      },
+      {
+        "productId": 12,
+        "quantity": 850,
+        "minimumQuantity": 22,
+        "name": "Product 12",
+        "price": 2600,
+        "description": "Nisi ut aliquip ex ea commodo consequat.",
+        "images": ["product.png", "product.png", "product.png"]
+      },
+      {
+        "productId": 13,
+        "quantity": 950,
+        "minimumQuantity": 30,
+        "name": "Product 13",
+        "price": 2800,
+        "imagePaths": ["product.png"],
+        "description": "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore.",
+        "images": ["product.png", "product.png", "product.png", "product.png", "product.png"]
+      },
+      {
+        "productId": 14,
+        "quantity": 1050,
+        "minimumQuantity": 35,
+        "name": "Product 14",
+        "price": 3000,
+        "description": "Eu fugiat nulla pariatur.",
+        "images": ["product.png"]
+      }
+    ],
+    "2": [
+      {
+        "productId": 15,
+        "quantity": 0,
+        "minimumQuantity": 40,
+        "name": "Product 15",
+        "price": 3200,
+        "description": "Excepteur sint occaecat cupidatat non proident.",
+        "images": ["product.png", "product.png", "product.png", "product.png"]
+      },
+      {
+        "productId": 16,
+        "quantity": 1250,
+        "minimumQuantity": 45,
+        "name": "Product 16",
+        "price": 3400,
+        "description": "Sunt in culpa qui officia deserunt mollit anim id est laborum.",
+        "images": ["product.png", "product.png"]
+      },
+      {
+        "productId": 17,
+        "quantity": 1350,
+        "minimumQuantity": 50,
+        "name": "Product 17",
+        "price": 3600,
+        "imagePaths": ["product.png"],
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+        "images": ["product.png", "product.png", "product.png", "product.png", "product.png"]
+      },
+      {
+        "productId": 18,
+        "quantity": 1450,
+        "minimumQuantity": 55,
+        "name": "Product 18",
+        "price": 3800,
+        "description": "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+        "images": ["product.png", "product.png", "product.png"]
+      },
+      {
+        "productId": 19,
+        "quantity": 0,
+        "minimumQuantity": 60,
+        "name": "Product 19",
+        "price": 4000,
+        "imagePaths": ["product.png"],
+        "description": "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.",
+        "images": ["product.png", "product.png"]
+      },
+      {
+        "productId": 20,
+        "quantity": 0,
+        "minimumQuantity": 65,
+        "name": "Product 20",
+        "price": 4200,
+        "description": "Nisi ut aliquip ex ea commodo consequat.",
+        "images": ["product.png", "product.png", "product.png", "product.png"]
+      },
+      {
+        "productId": 21,
+        "quantity": 0,
+        "minimumQuantity": 70,
+        "name": "Product 21",
+        "price": 4400,
+        "imagePaths": ["product.png"],
+        "description": "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore.",
+        "images": ["product.png", "product.png", "product.png"]
+      }
+    ],
+    "3": [
+      {
+        "productId": 22,
+        "quantity": 0,
+        "minimumQuantity": 75,
+        "name": "Product 22",
+        "price": 4600,
+        "description": "Eu fugiat nulla pariatur.",
+        "images": ["product.png", "product.png"]
+      },
+      {
+        "productId": 24,
+        "quantity": 2050,
+        "minimumQuantity": 85,
+        "name": "Product 24",
+        "price": 5000,
+        "description": "Excepteur sint occaecat cupidatat non proident.",
+        "images": ["product.png", "product.png", "product.png"]
+      },
+      {
+        "productId": 25,
+        "quantity": 2150,
+        "minimumQuantity": 90,
+        "name": "Product 25",
+        "price": 5200,
+        "imagePaths": ["product.png"],
+        "description": "Sunt in culpa qui officia deserunt mollit anim id est laborum.",
+        "images": ["product.png", "product.png", "product.png", "product.png", "product.png"]
+      }
+    ]
+  },
+  "q0": {
+    "0": [
+      {
+        "productId": 4,
+        "quantity": 0,
+        "minimumQuantity": 20,
+        "imagePaths": ["product.png"],
+        "name": "Product 4",
+        "price": 1800,
+        "description": "Nisi ut aliquip ex ea commodo consequat.",
+        "images": ["product.png"]
+      },
+      {
+        "productId": 6,
+        "quantity": 0,
+        "minimumQuantity": 8,
+        "name": "Product 6",
+        "price": 1600,
+        "description": "Eu fugiat nulla pariatur.",
+        "images": ["product.png", "product.png", "product.png", "product.png", "product.png"]
+      },
+      {
+        "productId": 7,
+        "quantity": 0,
+        "minimumQuantity": 18,
+        "name": "Product 7",
+        "price": 2100,
+        "imagePaths": ["product.png"],
+        "description": "Excepteur sint occaecat cupidatat non proident.",
+        "images": ["product.png"]
+      },
+      {
+        "productId": 8,
+        "quantity": 0,
+        "minimumQuantity": 25,
+        "name": "Product 8",
+        "price": 2300,
+        "description": "Sunt in culpa qui officia deserunt mollit anim id est laborum.",
+        "images": ["product.png", "product.png", "product.png"]
+      },
+      {
+        "productId": 10,
+        "quantity": 0,
+        "minimumQuantity": 14,
+        "name": "Product 10",
+        "price": 1900,
+        "description": "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+        "images": ["product.png", "product.png", "product.png", "product.png"]
+      },
+      {
+        "productId": 15,
+        "quantity": 0,
+        "minimumQuantity": 40,
+        "name": "Product 15",
+        "price": 3200,
+        "description": "Excepteur sint occaecat cupidatat non proident.",
+        "images": ["product.png", "product.png", "product.png", "product.png"]
+      },
+      {
+        "productId": 19,
+        "quantity": 0,
+        "minimumQuantity": 60,
+        "name": "Product 19",
+        "price": 4000,
+        "imagePaths": ["product.png"],
+        "description": "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.",
+        "images": ["product.png", "product.png"]
+      }
+    ],
+    "1": [
+      {
+        "productId": 20,
+        "quantity": 0,
+        "minimumQuantity": 65,
+        "name": "Product 20",
+        "price": 4200,
+        "description": "Nisi ut aliquip ex ea commodo consequat.",
+        "images": ["product.png", "product.png", "product.png", "product.png"]
+      },
+      {
+        "productId": 21,
+        "quantity": 0,
+        "minimumQuantity": 70,
+        "name": "Product 21",
+        "price": 4400,
+        "imagePaths": ["product.png"],
+        "description": "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore.",
+        "images": ["product.png", "product.png", "product.png"]
+      },
+      {
+        "productId": 22,
+        "quantity": 0,
+        "minimumQuantity": 75,
+        "name": "Product 22",
+        "price": 4600,
+        "description": "Eu fugiat nulla pariatur.",
+        "images": ["product.png", "product.png"]
+      }
+    ]
+  },
+  "qa": {
+    "0": [
+      {
+        "productId": 1,
+        "quantity": 500,
+        "minimumQuantity": 10,
+        "name": "Product 1",
+        "price": 1500,
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+        "images": ["product.png", "product.png"]
+      },
+      {
+        "productId": 2,
+        "quantity": 300,
+        "minimumQuantity": 5,
+        "name": "Product 2",
+        "price": 2000,
+        "description": "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+        "images": []
+      },
+      {
+        "productId": 3,
+        "quantity": 800,
+        "minimumQuantity": 15,
+        "name": "Product 3",
+        "price": 2500,
+        "imagePaths": ["product.png"],
+        "description": "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.",
+        "images": ["product.png", "product.png", "product.png"]
+      },
+      {
+        "productId": 5,
+        "quantity": 600,
+        "minimumQuantity": 12,
+        "name": "Product 5",
+        "price": 2200,
+        "imagePaths": ["product.png"],
+        "description": "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore.",
+        "images": ["product.png", "product.png", "product.png", "product.png"]
+      },
+      {
+        "productId": 9,
+        "quantity": 550,
+        "minimumQuantity": 10,
+        "name": "Product 9",
+        "price": 1700,
+        "imagePaths": ["product.png"],
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+        "images": ["product.png", "product.png"]
+      },
+      {
+        "productId": 11,
+        "quantity": 750,
+        "minimumQuantity": 16,
+        "name": "Product 11",
+        "price": 2400,
+        "description": "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.",
+        "images": ["product.png", "product.png"]
+      },
+      {
+        "productId": 12,
+        "quantity": 850,
+        "minimumQuantity": 22,
+        "name": "Product 12",
+        "price": 2600,
+        "description": "Nisi ut aliquip ex ea commodo consequat.",
+        "images": ["product.png", "product.png", "product.png"]
+      }
+    ],
+    "1": [
+      {
+        "productId": 13,
+        "quantity": 950,
+        "minimumQuantity": 30,
+        "name": "Product 13",
+        "price": 2800,
+        "imagePaths": ["product.png"],
+        "description": "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore.",
+        "images": ["product.png", "product.png", "product.png", "product.png", "product.png"]
+      },
+      {
+        "productId": 14,
+        "quantity": 1050,
+        "minimumQuantity": 35,
+        "name": "Product 14",
+        "price": 3000,
+        "description": "Eu fugiat nulla pariatur.",
+        "images": ["product.png"]
+      },
+      {
+        "productId": 16,
+        "quantity": 1250,
+        "minimumQuantity": 45,
+        "name": "Product 16",
+        "price": 3400,
+        "description": "Sunt in culpa qui officia deserunt mollit anim id est laborum.",
+        "images": ["product.png", "product.png"]
+      },
+      {
+        "productId": 17,
+        "quantity": 1350,
+        "minimumQuantity": 50,
+        "name": "Product 17",
+        "price": 3600,
+        "imagePaths": ["product.png"],
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+        "images": ["product.png", "product.png", "product.png", "product.png", "product.png"]
+      },
+      {
+        "productId": 18,
+        "quantity": 1450,
+        "minimumQuantity": 55,
+        "name": "Product 18",
+        "price": 3800,
+        "description": "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+        "images": ["product.png", "product.png", "product.png"]
+      },
+      {
+        "productId": 24,
+        "quantity": 2050,
+        "minimumQuantity": 85,
+        "name": "Product 24",
+        "price": 5000,
+        "description": "Excepteur sint occaecat cupidatat non proident.",
+        "images": ["product.png", "product.png", "product.png"]
+      },
+      {
+        "productId": 25,
+        "quantity": 2150,
+        "minimumQuantity": 90,
+        "name": "Product 25",
+        "price": 5200,
+        "imagePaths": ["product.png"],
+        "description": "Sunt in culpa qui officia deserunt mollit anim id est laborum.",
+        "images": ["product.png", "product.png", "product.png", "product.png", "product.png"]
+      }
+    ]
+  }
+}

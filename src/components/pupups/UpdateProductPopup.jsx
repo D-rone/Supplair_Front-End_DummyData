@@ -1,10 +1,8 @@
-import React, { useEffect, useReducer, useState } from "react";
+import React, { useReducer, useState } from "react";
 import PopUp1 from "./PopUp1";
 import { toast } from "react-toastify";
 import { FaDownload } from "react-icons/fa6";
 import { v4 } from "uuid";
-import { fileUpload, supplairAPI } from "../../utils/axios";
-import Cookies from "universal-cookie";
 import { ClockLoader } from "react-spinners";
 
 function UpdateProductPopup({ close, product, categories, setUpdateGet }) {
@@ -32,68 +30,18 @@ function UpdateProductPopup({ close, product, categories, setUpdateGet }) {
       const formDataRequest = new FormData();
 
       if (formData.imagePaths.length > 0) {
-        let paths = formData?.imagePaths.filter((image) => typeof image == "string");
         let files = formData?.imagePaths.filter((image) => typeof image == "object");
 
         files.forEach((image) => {
           formDataRequest.append("files", image);
         });
         setLoading(true);
-        fileUpload
-          .post("/api/upload/products", formDataRequest, {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          })
-          .then((response) => {
-            const imagePaths = [...paths, ...response.data];
-            const cookies = new Cookies();
-            const storedAccessToken = cookies.get("access_token");
 
-            const updateObject = {
-              name: product.name == formData.name ? null : formData.name,
-              reference: product.reference == formData.reference ? null : formData.reference,
-              price: product.price == formData.price ? null : formData.price,
-              description:
-                product.description == formData.description ? null : formData.description,
-              quantity: product.quantity == formData.quantity ? null : formData.quantity,
-              minimumQuantity:
-                product.minimumQuantity == formData.minimumQuantity
-                  ? null
-                  : formData.minimumQuantity,
-              imagePaths: product.imagePaths == imagePaths ? null : imagePaths,
-              discount: product.discount == formData.discount ? null : formData.discount,
-            };
-
-            supplairAPI
-              .put(
-                "/products-srv/command/products_group/" +
-                  formData.productsGroupId +
-                  "/product/" +
-                  formData.productId,
-                updateObject,
-                {
-                  headers: {
-                    Authorization: `Bearer ${storedAccessToken}`,
-                  },
-                }
-              )
-              .then((response) => {
-                toast.success(response.data);
-                setUpdateGet((prev) => !prev);
-                close(false);
-              })
-              .catch((err) => {
-                toast.error(err.message);
-              });
-          })
-          .catch((err) => {
-            toast.error(err.message);
-            setUpdated(true);
-          })
-          .finally(() => {
-            setLoading(false);
-          });
+        setTimeout(() => {
+          toast.success("Successful");
+          setUpdateGet((prev) => !prev);
+          onClose(false);
+        }, 1000);
       } else {
         toast.error("Each Product should have at least one image");
       }
@@ -144,8 +92,14 @@ function UpdateProductPopup({ close, product, categories, setUpdateGet }) {
   const [addDiscount, setAddDiscount] = useState(product.discount);
 
   return (
-    <PopUp1 closeMe={closePopup} title="Add Product">
-      <form onSubmit={handleAddProduct} className="p-4">
+    <PopUp1
+      closeMe={closePopup}
+      title="Add Product"
+    >
+      <form
+        onSubmit={handleAddProduct}
+        className="p-4"
+      >
         <div className="max-h-[60vh] overflow-y-scroll overflow-x-clip">
           <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
             {/* First Column */}
@@ -216,10 +170,16 @@ function UpdateProductPopup({ close, product, categories, setUpdateGet }) {
                   {Object.entries(categories).map(([category, groups]) => {
                     return (
                       <>
-                        <optgroup key={v4()} label={category}>
+                        <optgroup
+                          key={v4()}
+                          label={category}
+                        >
                           {groups.map((group) => {
                             return (
-                              <option key={v4()} value={group.productsGroupId}>
+                              <option
+                                key={v4()}
+                                value={group.productsGroupId}
+                              >
                                 {group.name}
                               </option>
                             );
@@ -335,7 +295,7 @@ function UpdateProductPopup({ close, product, categories, setUpdateGet }) {
                 />
               </div>
               <div className="flex flex-wrap overflow-x-auto mt-2">
-                {images.map((imagePath, index) => (
+                {images?.map((imagePath, index) => (
                   <div
                     key={index}
                     className="relative mr-2 mb-2 size-20"
@@ -381,7 +341,11 @@ function UpdateProductPopup({ close, product, categories, setUpdateGet }) {
           </div>
         </div>
         <div className="flex justify-end gap-5 mt-6">
-          <button onClick={closePopup} className="cancelBtn" type="button">
+          <button
+            onClick={closePopup}
+            className="cancelBtn"
+            type="button"
+          >
             Cancel
           </button>
           <input

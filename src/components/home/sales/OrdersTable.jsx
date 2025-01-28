@@ -15,43 +15,151 @@ const OrdersTable = ({ filterOption, id }) => {
   const [orderDetails, setOrderDetails] = useState({});
 
   useEffect(() => {
-    supplairAPI
-      .get(`orders-srv/api/v1/orders/` + userData.companyName)
-      .then((res) => {
-        if (id) {
-          setOrders(res.data.filter((order) => order.order_number === id));
-        } else {
-          setOrders(res.data);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, [id]);
+    setOrders([
+      {
+        delivery_date: "15/11/2023",
+        order_number: "1234",
+        client_name: "Mohamed",
+        totalAmount: 15000,
+        status: "ACCEPTED",
+      },
+      {
+        delivery_date: "20/11/2023",
+        order_number: "5678",
+        client_name: "Alice",
+        totalAmount: 20000,
+        status: "PENDING",
+      },
+      {
+        delivery_date: "25/11/2023",
+        order_number: "9101",
+        client_name: "John",
+        totalAmount: 25000,
+        status: "SHIPPED",
+      },
+      {
+        delivery_date: "30/11/2023",
+        order_number: "1121",
+        client_name: "Emma",
+        totalAmount: 30000,
+        status: "DELIVERED",
+      },
+      {
+        delivery_date: "05/12/2023",
+        order_number: "3141",
+        client_name: "Liam",
+        totalAmount: 35000,
+        status: "CANCELLED",
+      },
+      {
+        delivery_date: "10/12/2023",
+        order_number: "5161",
+        client_name: "Olivia",
+        totalAmount: 40000,
+        status: "ACCEPTED",
+      },
+      {
+        delivery_date: "15/12/2023",
+        order_number: "7181",
+        client_name: "Noah",
+        totalAmount: 45000,
+        status: "PENDING",
+      },
+      {
+        delivery_date: "20/12/2023",
+        order_number: "9202",
+        client_name: "Sophia",
+        totalAmount: 50000,
+        status: "SHIPPED",
+      },
+      {
+        delivery_date: "25/12/2023",
+        order_number: "1222",
+        client_name: "Mason",
+        totalAmount: 55000,
+        status: "DELIVERED",
+      },
+      {
+        delivery_date: "30/12/2023",
+        order_number: "3242",
+        client_name: "Isabella",
+        totalAmount: 60000,
+        status: "CANCELLED",
+      },
+    ]);
+  }, []);
 
   useEffect(() => {
     if (selectedOrder) {
-      supplairAPI
-        .get(
-          `orders-srv/api/v1/supplier/orders/` +
-            selectedOrder.order_number
-        )
-        .then((res) => {
-          setOrderDetails(res.data);
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-        });
+      setOrderDetails({
+        date: selectedOrder.delivery_date,
+        orderId: "1235",
+        customerName: selectedOrder.client_name,
+        customerEmail: selectedOrder.client_name + "@gmail.com",
+        customerAddress: "25 baghdadi Mohamed street",
+        orderState: selectedOrder.status,
+        productRows: [
+          {
+            product_name: "Product 11",
+            qte: 50,
+            product_price: 1500,
+          },
+          {
+            product_name: "Product 2",
+            qte: 10,
+            product_price: 500,
+          },
+          {
+            product_name: "Product 5",
+            qte: 7,
+            product_price: 15000,
+          },
+          {
+            product_name: "Product 1",
+            qte: 1,
+            product_price: 30000,
+          },
+        ],
+        totalAmount: selectedOrder.totalAmount,
+        payedAmount: Math.ceil(selectedOrder.totalAmount - selectedOrder.totalAmount * 0.6),
+      });
     }
   }, [selectedOrder]);
 
   const toggleSidebar = async (orderId) => {
     try {
-      const response = await supplairAPI.get(
-        `orders-srv/api/v1/supplier/orders/` + orderId
-      );
-
-      setOrderDetails(response.data);
+      setOrderDetails({
+        date: "12/07/2023",
+        orderId: "1235",
+        customerName: "Mohamed",
+        customerEmail: "mohamed@gmail.com",
+        customerAddress: "25 baghdadi Mohamed street",
+        orderState: "Shipped",
+        productRows: [
+          {
+            product_name: "Product 11",
+            qte: 50,
+            product_price: 1500,
+          },
+          {
+            product_name: "Product 2",
+            qte: 10,
+            product_price: 500,
+          },
+          {
+            product_name: "Product 5",
+            qte: 7,
+            product_price: 15000,
+          },
+          {
+            product_name: "Product 1",
+            qte: 1,
+            product_price: 30000,
+          },
+        ],
+        totalAmount: 12000,
+        payedAmount: 5000,
+      });
     } catch (error) {
       console.error("Error:", error);
     }
@@ -62,9 +170,7 @@ const OrdersTable = ({ filterOption, id }) => {
       setShowSidebar(false);
     } else {
       setExpandedOrder(orderId);
-      const selectedOrder = orders.find(
-        (order) => order.order_number === orderId
-      );
+      const selectedOrder = orders.find((order) => order.order_number === orderId);
       setSelectedOrder(selectedOrder);
       setOriginalStatus(selectedOrder.status); // Set original status
       setShowSidebar(true);
@@ -72,9 +178,7 @@ const OrdersTable = ({ filterOption, id }) => {
   };
 
   const filteredOrders =
-    filterOption === "ALL"
-      ? orders
-      : orders.filter((order) => order.status === filterOption);
+    filterOption === "ALL" ? orders : orders.filter((order) => order.status === filterOption);
 
   const handleCloseSidebar = () => {
     setExpandedOrder(null);
@@ -83,9 +187,7 @@ const OrdersTable = ({ filterOption, id }) => {
   };
 
   const handleNavigateOrder = (orderId) => {
-    const selectedOrder = orders.find(
-      (order) => order.order_number === orderId
-    );
+    const selectedOrder = orders.find((order) => order.order_number === orderId);
     setSelectedOrder(selectedOrder);
     setOriginalStatus(selectedOrder.status); // Set original status when navigating
   };
@@ -151,13 +253,7 @@ const OrdersTable = ({ filterOption, id }) => {
                         </td>
                       </tr>
                     ) : (
-                      <tr
-                        className={
-                          expandedOrder === order.order_number
-                            ? "bg-gray-100"
-                            : ""
-                        }
-                      >
+                      <tr className={expandedOrder === order.order_number ? "bg-gray-100" : ""}>
                         <td className="px-6 py-4 whitespace-nowrap font-semibold">
                           {order.delivery_date}
                         </td>

@@ -2,28 +2,17 @@ import React, { useState, useEffect } from "react";
 import { useUserContext } from "../../../pages/HomePage";
 import showMore from "../../../assets/images/more.svg";
 import UpdateBillingState from "./UpdateBillingState";
-import { supplairAPI } from "../../../utils/axios";
+import dummyData from "./dummyData.json";
 
 function BillingTable({ selectedMonth }) {
-  const taxe = 500;
-  const { userData, setUserData } = useUserContext();
+  const taxe = 50;
   const [invoices, setinvoices] = useState([]);
   const [showMoreOptions, setShowMoreOptions] = useState(false);
   const [update, setUpdate] = useState(false);
   const [updatedInvoice, setUpdatedInvoice] = useState(null);
 
   useEffect(() => {
-    supplairAPI
-      .get(`orders-srv/api/v1/invoices`)
-      .then((res) => {
-        const filteredInvoices = res.data.filter((invoice) => {
-          return invoice.date === selectedMonth;
-        });
-        setinvoices(filteredInvoices);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    setinvoices(dummyData.invoices);
   }, [selectedMonth, update]);
 
   const handlePrintInvoice = (invoice) => {
@@ -56,7 +45,7 @@ table {
     <thead>
       <tr style="text-align: left;">
         <th style="padding: 10px;">Orders number</th>
-        <th style="padding: 10px;">Taxe</th>
+        <th style="padding: 10px;">Fee Per Order</th>
       </tr>
     </thead>
     <tbody>
@@ -120,9 +109,7 @@ table {
                   <React.Fragment key={invoice.id}>
                     <tr>
                       <td className="px-6 py-4 whitespace-nowrap cursor-pointer">
-                        <div className="truncate max-w-xs font-semibold">
-                          {invoice.id}
-                        </div>
+                        <div className="truncate max-w-xs font-semibold">{invoice.id}</div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap font-semibold">
                         {invoice.companyName}
@@ -138,10 +125,7 @@ table {
                       >
                         <div
                           style={{
-                            color:
-                              invoice.status == "PENDING"
-                                ? "#E2B102"
-                                : "#07A104",
+                            color: invoice.status == "PENDING" ? "#E2B102" : "#07A104",
                           }}
                         >
                           {invoice.status}
@@ -195,7 +179,11 @@ table {
                           }
                         }}
                       >
-                        <img src={showMore} alt="" className="w-6" />
+                        <img
+                          src={showMore}
+                          alt=""
+                          className="w-6"
+                        />
                       </td>
                     </tr>
                   </React.Fragment>

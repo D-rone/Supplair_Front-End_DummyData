@@ -8,15 +8,15 @@ import Cookies from "universal-cookie";
 import { toast } from "react-toastify";
 import { ScaleLoader } from "react-spinners";
 import UpdateProductPopup from "../../pupups/UpdateProductPopup";
+import dummyData from "./dummyData.json";
 
 function ProductsByGroup() {
-  const [groupName, setGroupName] = useState("");
+  const { id } = useParams();
+  const [groupName] = useState(id);
   const [products, setProducts] = useState([]);
 
   const [updateProduct, setUpdateProduct] = useState(null);
   const [addProduct, setAddProduct] = useState(false);
-
-  const { id } = useParams();
 
   const [loading, setLoading] = useState(true);
   const [updateGet, setUpdateGet] = useState(false);
@@ -27,56 +27,26 @@ function ProductsByGroup() {
 
   let makeRequest = (page) => {
     setLoading(true);
-    const cookies = new Cookies();
-    const storedAccessToken = cookies.get("access_token");
-
-    supplairAPI
-      .get("products-srv/query/supplier/productsGroup/" + id + "?page=" + page + "&size=8", {
-        headers: {
-          Authorization: `Bearer ${storedAccessToken}`,
-        },
-      })
-      .then((data) => {
-        setGroupName(data?.data?.name);
-        setProducts(data?.data?.products?.content);
-        setTotalPages(data?.data?.products?.totalPages);
-        setLoading(false);
-      })
-      .catch((err) => {
-        if (Math.floor(err?.response?.status / 100) == 5) toast.error("Server Error");
-        else toast.error(err.message);
-        setLoading(false);
-      });
+    setTimeout(() => {
+      setProducts(dummyData.p[3]);
+      setTotalPages(1);
+      setLoading(false);
+    }, 1000);
   };
 
   const [categories, setCategories] = useState([]);
   const [groups, setGroups] = useState([]);
   useEffect(() => {
-    const cookies = new Cookies();
-    const storedAccessToken = cookies.get("access_token");
-
-    supplairAPI
-      .get("products-srv/query/supplier/myProductsGroups?page=0&size=100", {
-        headers: {
-          Authorization: `Bearer ${storedAccessToken}`,
-        },
-      })
-      .then((data) => {
-        const result = data?.data?.content.reduce((acc, item) => {
-          const { categoryId, name, productsGroupId } = item;
-          if (!acc[categoryId]) {
-            acc[categoryId] = [];
-          }
-          acc[categoryId].push({ name, productsGroupId });
-          return acc;
-        }, {});
-        setCategories(result);
-        setGroups(data?.data?.content);
-      })
-      .catch((err) => {
-        if (Math.floor(err?.response?.status / 100) == 5) toast.error("Server Error");
-        else toast.error(err.message);
-      });
+    const result = dummyData.gp[0].reduce((acc, item) => {
+      const { categoryId, name, productsGroupId } = item;
+      if (!acc[categoryId]) {
+        acc[categoryId] = [];
+      }
+      acc[categoryId].push({ name, productsGroupId });
+      return acc;
+    }, {});
+    setCategories(result);
+    // setGroups(data?.data?.content);
   }, []);
 
   useEffect(() => {

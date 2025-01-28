@@ -6,7 +6,6 @@ import SidePage from "../../components/Side/SidePage";
 import { toast } from "react-toastify";
 import { NavLink, useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { fileUpload, supplairAPI } from "../../utils/axios";
 import { ClockLoader, ScaleLoader } from "react-spinners";
 
 library.add(faUpload);
@@ -111,41 +110,14 @@ export default function SignUp_2() {
 
         setLoading(true);
 
-        console.log(selectedWilayas);
-        fileUpload
-          .post("/api/upload/trade_registries", formDataRequest, {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          })
-          .then((response) => {
-            const filesPaths = response.data;
-
-            supplairAPI
-              .post("auth-srv/api/v1/auth/register/company-infos", {
-                name: companyName,
-                address: address,
-                fileUrls: filesPaths,
-                hasDeliveryDate: hasDeliveryDates,
-                wilayas: selectedWilayas,
-              })
-              .then(() => {
-                toast.dismiss();
-                toast.success(
-                  "Thank you for signing up! Your registration is now in progress. We're working to create your account. Please be patient, and we'll notify you once it's complete.",
-                  { autoClose: false }
-                );
-                navigate("/login", { replace: true });
-              })
-              .catch((error) => {
-                toast.error(error?.response?.data, { autoClose: false });
-              })
-              .finally(() => {
-              });
-          })
-          .catch((err) => {
-            toast.error(err.message);
-          });
+        toast.dismiss();
+        toast.success(
+          "Thank you for signing up! Your registration is now in progress. We're working to create your account. Please be patient, and we'll notify you once it's complete.",
+          { autoClose: false }
+        );
+        setTimeout(() => {
+          navigate("/login", { replace: true });
+        }, 1000);
       } else {
         toast.error("Each Product should have at least one image");
       }
@@ -165,7 +137,10 @@ export default function SignUp_2() {
     <>
       <div className="absolute top-0 right-0 mt-2 mr-10">
         <span className="font-semibold font-Raleway ">Already have an account ?</span>
-        <NavLink to="/login" className="ml-2 font-bold text-supplair-primary font-Raleway">
+        <NavLink
+          to="/login"
+          className="ml-2 font-bold text-supplair-primary font-Raleway"
+        >
           Log In
         </NavLink>
       </div>
@@ -178,7 +153,10 @@ export default function SignUp_2() {
           </h1>
           <form onSubmit={handleSignUp}>
             <div className="flex flex-col items-center mt-4 mr-44">
-              <div className="mb-6" style={{ marginBottom: "1rem" }}>
+              <div
+                className="mb-6"
+                style={{ marginBottom: "1rem" }}
+              >
                 <label
                   htmlFor="organizationName"
                   className={`block text-base font-normal mb-1 ${"text-gray-500"}`}
@@ -193,7 +171,10 @@ export default function SignUp_2() {
                   disabled
                 />
               </div>
-              <div className="mb-10" style={{ marginBottom: "1rem" }}>
+              <div
+                className="mb-10"
+                style={{ marginBottom: "1rem" }}
+              >
                 <label
                   htmlFor="address"
                   className={`block text-base font-normal mb-1 ${
@@ -270,7 +251,10 @@ export default function SignUp_2() {
                     checked={hasDeliveryDates === true}
                     onChange={() => setHasDeliveryDates(true)}
                   />
-                  <label htmlFor="deliveryDatesYes" className="text-gray-500 mr-4">
+                  <label
+                    htmlFor="deliveryDatesYes"
+                    className="text-gray-500 mr-4"
+                  >
                     Yes
                   </label>
                   <input
@@ -281,7 +265,10 @@ export default function SignUp_2() {
                     checked={hasDeliveryDates === false}
                     onChange={() => setHasDeliveryDates(false)}
                   />
-                  <label htmlFor="deliveryDatesNo" className="text-gray-500">
+                  <label
+                    htmlFor="deliveryDatesNo"
+                    className="text-gray-500"
+                  >
                     No
                   </label>
                 </div>
@@ -296,7 +283,10 @@ export default function SignUp_2() {
                   style={{ height: "100px" }}
                 >
                   {wilayas.map((wilaya) => (
-                    <div key={wilaya.label} className="flex items-center">
+                    <div
+                      key={wilaya.label}
+                      className="flex items-center"
+                    >
                       <input
                         id={`wilaya-${wilaya.label}`}
                         type="checkbox"
@@ -304,7 +294,10 @@ export default function SignUp_2() {
                         checked={selectedWilayas.includes(wilaya.label)}
                         onChange={() => handleWilayaChange(wilaya.label)}
                       />
-                      <label htmlFor={`wilaya-${wilaya.label}`} className="text-gray-500">
+                      <label
+                        htmlFor={`wilaya-${wilaya.label}`}
+                        className="text-gray-500"
+                      >
                         {wilaya.label}
                       </label>
                     </div>
@@ -316,7 +309,14 @@ export default function SignUp_2() {
                 className="h-10 flex items-center justify-center mt-5 mb-2 text-white w-96 bg-supplair-primary rounded-xl"
                 type="submit"
               >
-                {loading ? <ScaleLoader color="white" size={25} /> : <>Get Started</>}
+                {loading ? (
+                  <ScaleLoader
+                    color="white"
+                    size={25}
+                  />
+                ) : (
+                  <>Get Started</>
+                )}
               </button>
             </div>
           </form>

@@ -13,7 +13,6 @@ import {
 import Cookies from "universal-cookie";
 import { ScaleLoader } from "react-spinners";
 import { toast } from "react-toastify";
-import { supplairAPI } from "../../../utils/axios";
 
 function SuperAdminAccounts() {
   const [showAccountsMenu, setShowAccountsMenu] = useState(false);
@@ -47,25 +46,102 @@ function SuperAdminAccounts() {
     "GOURMET_AND_SPECIALTY",
     "FOOD_SERVICE_EQUIPMENT_AND_SUPPLIES",
   ];
-  const cookies = new Cookies();
-  const storedAccessToken = cookies.get("access_token");
-  const formData = new FormData();
-  formData.append("token", storedAccessToken);
 
+  const companiesList = [
+    {
+      key: "0",
+      companyName: "SolidEx",
+      contact: "(+213)41 36 32 02",
+      state: "ACTIVE",
+    },
+    {
+      key: "1",
+      companyName: "TechCorp",
+      contact: "(+213)41 36 32 03",
+      state: "INACTIVE",
+    },
+    {
+      key: "2",
+      companyName: "Innovatech",
+      contact: "(+213)41 36 32 04",
+      state: "BLOCKED",
+    },
+    {
+      key: "3",
+      companyName: "Green Solutions",
+      contact: "(+213)41 36 32 05",
+      state: "ACTIVE",
+    },
+    {
+      key: "4",
+      companyName: "FutureWorks",
+      contact: "(+213)41 36 32 06",
+      state: "INACTIVE",
+    },
+    {
+      key: "5",
+      companyName: "EcoBuild",
+      contact: "(+213)41 36 32 07",
+      state: "BLOCKED",
+    },
+    {
+      key: "6",
+      companyName: "DataStream",
+      contact: "(+213)41 36 32 08",
+      state: "ACTIVE",
+    },
+    {
+      key: "7",
+      companyName: "NextGen",
+      contact: "(+213)41 36 32 09",
+      state: "INACTIVE",
+    },
+    {
+      key: "8",
+      companyName: "AlphaTech",
+      contact: "(+213)41 36 32 10",
+      state: "BLOCKED",
+    },
+    {
+      key: "9",
+      companyName: "QuantumLeap",
+      contact: "(+213)41 36 32 11",
+      state: "ACTIVE",
+    },
+    {
+      key: "10",
+      companyName: "SkyNet",
+      contact: "(+213)41 36 32 12",
+      state: "INACTIVE",
+    },
+    {
+      key: "11",
+      companyName: "Cyberdyne",
+      contact: "(+213)41 36 32 13",
+      state: "BLOCKED",
+    },
+    {
+      key: "12",
+      companyName: "NanoTech",
+      contact: "(+213)41 36 32 14",
+      state: "ACTIVE",
+    },
+    {
+      key: "13",
+      companyName: "BioGen",
+      contact: "(+213)41 36 32 15",
+      state: "INACTIVE",
+    },
+    {
+      key: "14",
+      companyName: "AstroDynamics",
+      contact: "(+213)41 36 32 16",
+      state: "BLOCKED",
+    },
+  ];
   useEffect(() => {
-    supplairAPI
-      .get(`auth-srv/api/v1/companies`, {
-        headers: {
-          Authorization: "Bearer " + storedAccessToken,
-        },
-      })
-      .then((res) => {
-        setUpdatedData(res.data);
-        setData(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    setUpdatedData(companiesList);
+    setData(companiesList);
   }, []);
 
   const toggleAccountsMenu = () => {
@@ -92,20 +168,20 @@ function SuperAdminAccounts() {
   };
 
   const handleCompanyNameClick = async (company) => {
-    try {
-      const response = await supplairAPI.get("auth-srv/api/v1/companies/" + company.key, {
-        headers: {
-          Authorization: "Bearer " + storedAccessToken,
-        },
-      });
-      setCompanyDetails(response.data);
-      setSelectedCategories({
-        data: response.data.categories,
-        showCategoryMenu: false,
-      });
-    } catch (error) {
-      console.error("Error:", error);
-    }
+    setCompanyDetails({
+      name: "Solidex",
+      email: "contact@solidex.com",
+      number: "(+213)669 29 19 46",
+      address: "25 Rue Baghdadi Mohamed",
+      fileUrls: [],
+      stateType: "ACTIVE",
+      categories: ["FRESH_PRODUCE", "DAIRY_AND_EGGS", "FROZEN_FOODS"],
+    });
+    setSelectedCategories({
+      data: ["FRESH_PRODUCE", "DAIRY_AND_EGGS", "FROZEN_FOODS"],
+      showCategoryMenu: false,
+    });
+
     setSelectedCompany(company);
     setShowSidebar(true);
     setShowTableHeaders(false);
@@ -179,60 +255,36 @@ function SuperAdminAccounts() {
       }
       toast.dismiss();
       setLoaded(true);
-      try {
-        const response = await supplairAPI.put(
-          "auth-srv/api/v1/companies",
-          {
-            email: companyDetails.email,
-            companyName: companyDetails.name,
-            stateType: state,
-            categories: selectedCategories.data,
-          },
-          {
-            headers: {
-              Authorization: "Bearer " + storedAccessToken,
-            },
-          }
-        );
-        toast.success("Company Updated");
-      } catch (error) {
-        console.error("Error:", error);
-      } finally {
-        setLoaded(false);
-      }
 
-      supplairAPI
-        .get(`auth-srv/api/v1/companies`, {
-          headers: {
-            Authorization: "Bearer " + storedAccessToken,
-          },
-        })
-        .then((res) => {
-          setUpdatedData(res.data);
-          setData(res.data);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      setTimeout(() => {
+        toast.success("Company Updated");
+        setLoaded(false);
+      }, 1000);
+
+      setUpdatedData(companiesList);
+      setData(companiesList);
       onSaveChanges(updatedCompany);
     };
 
     return (
-      <div style={{ position: "relative" }}>
+      <div
+        style={{ position: "relative" }}
+        className="h-full"
+      >
         <div
           id="sidebar"
-          className="fixed top-0 right-0 h-full w-2/3 bg-white shadow-lg p-6 flex flex-col overflow-auto "
-          style={{
-            maxHeight: `calc(100vh - ${sidebarHeight > window.innerHeight ? 0 : 48}px)`,
-          }}
+          className="fixed top-0 right-0 h-full w-[60%] bg-white shadow-lg p-6 flex flex-col overflow-auto p-20"
         >
           <div className="flex justify-between items-center mt-10 mb-4">
-            <p className="text-xl font-bold ">{selectedCompany?.companyName}</p>
+            <p className="text-2xl font-bold mb-3">{selectedCompany?.companyName}</p>
             <button
               className="text-supplair-primary hover:text-supplair-primary-darker"
               onClick={() => setShowSidebar(false)}
             >
-              <FontAwesomeIcon icon={faTimes} className="h-6 w-6" />
+              <FontAwesomeIcon
+                icon={faTimes}
+                className="h-6 w-6"
+              />
             </button>
           </div>
           <div className="mb-4 flex items-center">
@@ -254,7 +306,11 @@ function SuperAdminAccounts() {
             {companyDetails.fileUrls.map((filepath, i) => (
               <div className="px-10 py-2">
                 <span>Trade Registry {i}</span>
-                <a key={i} href={filepath} target="_blank">
+                <a
+                  key={i}
+                  href={filepath}
+                  target="_blank"
+                >
                   <FontAwesomeIcon
                     size="lg"
                     icon={faDownload}
@@ -281,7 +337,10 @@ function SuperAdminAccounts() {
                   {selectedCategories.length > 0
                     ? `${selectedCategories.length} selected`
                     : "Select Categories"}
-                  <FontAwesomeIcon icon={faChevronDown} className="-mr-1 ml-2 h-5 w-5" />
+                  <FontAwesomeIcon
+                    icon={faChevronDown}
+                    className="-mr-1 ml-2 h-5 w-5"
+                  />
                 </button>
               </div>
               {selectedCategories.showCategoryMenu && (
@@ -327,7 +386,10 @@ function SuperAdminAccounts() {
                   onClick={toggleStateMenu}
                 >
                   {state || "inactive"}
-                  <FontAwesomeIcon icon={faChevronDown} className="-mr-1 ml-2 h-5 w-5" />
+                  <FontAwesomeIcon
+                    icon={faChevronDown}
+                    className="-mr-1 ml-2 h-5 w-5"
+                  />
                 </button>
               </div>
               {showStateMenu && (
@@ -400,8 +462,15 @@ function SuperAdminAccounts() {
       <div className="flex items-center justify-between">
         <div className="flex items-center relative">
           <h2 className="text-2xl font-bold mr-2">All Accounts</h2>
-          <button className="p-2 rounded-md text-supplair-primary" onClick={toggleAccountsMenu}>
-            <svg className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+          <button
+            className="p-2 rounded-md text-supplair-primary"
+            onClick={toggleAccountsMenu}
+          >
+            <svg
+              className="h-5 w-5"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
               <path
                 fillRule="evenodd"
                 d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
@@ -455,60 +524,61 @@ function SuperAdminAccounts() {
             </thead>
           )}
           <tbody>
-            {updatedData
-              .sort((a, b) => a.key - b.key)
-              .map((data, index) => (
-                <tr
-                  key={index}
-                  className={`${
+            {updatedData.map((data, index) => (
+              <tr
+                key={index}
+                className={`${
+                  selectedCompany?.key === data.key && showSidebar ? "bg-gray-200" : "bg-white"
+                }`}
+              >
+                <td
+                  className={`text-left py-2 border-b border-gray-300 text-supplair-primary font-semibold cursor-pointer ${
+                    selectedCompany?.key === data.key && showSidebar ? "bg-gray-200" : "bg-white"
+                  }`}
+                  onClick={() => handleCompanyNameClick(data)}
+                >
+                  {data.companyName}
+                </td>
+                <td
+                  className={`text-left py-2 border-b border-gray-300 ${
                     selectedCompany?.key === data.key && showSidebar ? "bg-gray-200" : "bg-white"
                   }`}
                 >
-                  <td
-                    className={`text-left py-2 border-b border-gray-300 text-supplair-primary font-semibold cursor-pointer ${
-                      selectedCompany?.key === data.key && showSidebar ? "bg-gray-200" : "bg-white"
-                    }`}
+                  {data.contact}
+                </td>
+                <td
+                  className={`text-left py-2 border-b border-gray-300 ${
+                    selectedCompany?.key === data.key && showSidebar ? "bg-gray-200" : "bg-white"
+                  }`}
+                >
+                  {data.state}
+                </td>
+                <td
+                  className={`py-2 text-center border-b border-gray-300 ${
+                    selectedCompany?.key === data.key && showSidebar ? "bg-gray-200" : "bg-white"
+                  }`}
+                >
+                  <button
+                    className="focus:outline-none"
                     onClick={() => handleCompanyNameClick(data)}
                   >
-                    {data.companyName}
-                  </td>
-                  <td
-                    className={`text-left py-2 border-b border-gray-300 ${
-                      selectedCompany?.key === data.key && showSidebar ? "bg-gray-200" : "bg-white"
-                    }`}
-                  >
-                    {data.contact}
-                  </td>
-                  <td
-                    className={`text-left py-2 border-b border-gray-300 ${
-                      selectedCompany?.key === data.key && showSidebar ? "bg-gray-200" : "bg-white"
-                    }`}
-                  >
-                    {data.state}
-                  </td>
-                  <td
-                    className={`py-2 text-center border-b border-gray-300 ${
-                      selectedCompany?.key === data.key && showSidebar ? "bg-gray-200" : "bg-white"
-                    }`}
-                  >
-                    <button
-                      className="focus:outline-none"
-                      onClick={() => handleCompanyNameClick(data)}
-                    >
-                      <FontAwesomeIcon
-                        icon={faPenToSquare}
-                        className="text-supplair-primary cursor-pointer"
-                      />
-                    </button>
-                  </td>
-                </tr>
-              ))}
+                    <FontAwesomeIcon
+                      icon={faPenToSquare}
+                      className="text-supplair-primary cursor-pointer"
+                    />
+                  </button>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
       {showSidebar && (
         <div className="fixed top-0 right-0 h-screen bg-white shadow-lg flex flex-col">
-          <Sidebar selectedCompany={selectedCompany} onSaveChanges={handleSaveChanges} />
+          <Sidebar
+            selectedCompany={selectedCompany}
+            onSaveChanges={handleSaveChanges}
+          />
         </div>
       )}
     </div>

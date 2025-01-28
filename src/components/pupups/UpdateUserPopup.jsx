@@ -1,30 +1,18 @@
 import React, { useEffect, useReducer, useState } from "react";
 import PopUp1 from "./PopUp16";
 import { toast } from "react-toastify";
-import Cookies from "universal-cookie";
-import { useUserContext } from "../../pages/HomePage";
-import { supplairAPI } from "../../utils/axios";
 
 function UpdateUserPopup({ user, close, reload, setReload, setShowDetails }) {
-  const cookies = new Cookies();
-  const storedAccessToken = cookies.get("access_token");
-  const formData = new FormData();
-  const { userData, setUserData } = useUserContext();
   const [roles, setRoles] = useState([]);
 
   useEffect(() => {
-    supplairAPI
-      .get(`auth-srv/api/v1/roles/` + userData.companyId, {
-        headers: {
-          Authorization: "Bearer " + storedAccessToken,
-        },
-      })
-      .then((res) => {
-        setRoles(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    setRoles([
+      { roleName: "Role 1", permissions: ["Inventory", "Sales", "Billing"] },
+      { roleName: "Role 2", permissions: ["Inventory"] },
+      { roleName: "Role 3", permissions: ["Billing"] },
+      { roleName: "Role 4", permissions: ["Announcements"] },
+      { roleName: "Role 5", permissions: ["Users & Roles"] },
+    ]);
   }, []);
 
   let closePopup = (e) => {
@@ -36,25 +24,9 @@ function UpdateUserPopup({ user, close, reload, setReload, setShowDetails }) {
     e.preventDefault();
 
     if (updated) {
-      try {
-        const response = await supplairAPI.patch(
-          `auth-srv/api/v1/users`,
-          {
-            email: user.email,
-            roleName: role,
-            stateType: active,
-          },
-          {
-            headers: {
-              Authorization: "Bearer " + storedAccessToken,
-            },
-          }
-        );
-        toast.success("User Updated")
-        setReload(!reload);
-      } catch (error) {
-        console.error("Error:", error);
-      }
+      toast.success("User Updated");
+      setReload(!reload);
+
       close(null);
     }
   };
@@ -69,7 +41,10 @@ function UpdateUserPopup({ user, close, reload, setReload, setShowDetails }) {
   const [active, setActive] = useReducer(updateReducer, user.stateType);
 
   return (
-    <PopUp1 closeMe={closePopup} title="Update User">
+    <PopUp1
+      closeMe={closePopup}
+      title="Update User"
+    >
       <div className="p-4">
         <form onSubmit={handleUpdateUser}>
           <div className="flex flex-col gap-1 mb-6 text-sm font-semibold">
@@ -101,7 +76,10 @@ function UpdateUserPopup({ user, close, reload, setReload, setShowDetails }) {
               className="w-full h-10 px-6 border-2 border-gray-400 rounded-lg focus:outline-supplair-primary"
             >
               {roles.map((role) => (
-                <option value={role.roleName} key={role.roleName}>
+                <option
+                  value={role.roleName}
+                  key={role.roleName}
+                >
                   {role.roleName}
                 </option>
               ))}
@@ -122,15 +100,17 @@ function UpdateUserPopup({ user, close, reload, setReload, setShowDetails }) {
           </div>
 
           <div className="flex justify-end gap-5">
-            <button onClick={closePopup} className="cancelBtn" type="button">
+            <button
+              onClick={closePopup}
+              className="cancelBtn"
+              type="button"
+            >
               Cancel
             </button>
             <input
               type="submit"
               value="Update"
-              className={`${
-                updated ? `hover:cursor-pointer approveBtn` : "cancelBtn"
-              } `}
+              className={`${updated ? `hover:cursor-pointer approveBtn` : "cancelBtn"} `}
             />
           </div>
         </form>

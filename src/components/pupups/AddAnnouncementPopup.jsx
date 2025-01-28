@@ -24,45 +24,11 @@ function AddAnnouncementPopup({ close, setUpdateGet }) {
         const formData = new FormData();
         formData.append("files", imageRef.current.files[0]);
         setLoading(true);
-        fileUpload
-          .post("/api/upload/announcements", formData, {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          })
-          .then((response) => {
-            const imagePath = response.data[0];
-            const cookies = new Cookies();
-            const storedAccessToken = cookies.get("access_token");
-            supplairAPI
-              .post(
-                "/announcement-srv/private/create",
-                {
-                  imagePath: imagePath,
-                  startDate: sDate.toISOString(),
-                  endDate: eDate.toISOString(),
-                },
-                {
-                  headers: {
-                    Authorization: `Bearer ${storedAccessToken}`,
-                  },
-                }
-              )
-              .then((response) => {
-                toast.success(response.data);
-                setUpdateGet((prev) => !prev);
-                close(false);
-              })
-              .catch((err) => {
-                toast.error(err.message);
-              });
-          })
-          .catch((err) => {
-            toast.error(err.message);
-          })
-          .finally(() => {
-            setLoading(false);
-          });
+        setTimeout(() => {
+          toast.success("Successful");
+          setUpdateGet((prev) => !prev);
+          close(false);
+        }, 1000);
       }
     }
   };
@@ -78,12 +44,20 @@ function AddAnnouncementPopup({ close, setUpdateGet }) {
   const imageRef = useRef();
 
   return (
-    <PopUp1 closeMe={closePopup} title="Add Announcement">
+    <PopUp1
+      closeMe={closePopup}
+      title="Add Announcement"
+    >
       <div className="p-4">
         <form onSubmit={handleAddAnnouncement}>
           <div className="flex flex-col gap-1 mb-6 text-sm font-semibold">
             <span>Announcement Image :</span>
-            <input type="file" placeholder="New User Name" required ref={imageRef} />
+            <input
+              type="file"
+              placeholder="New User Name"
+              required
+              ref={imageRef}
+            />
           </div>
           <div className="flex flex-col gap-1 mb-6 text-sm font-semibold">
             <span>Begin Date :</span>
@@ -107,7 +81,11 @@ function AddAnnouncementPopup({ close, setUpdateGet }) {
           </div>
 
           <div className="flex justify-end gap-5">
-            <button onClick={closePopup} className="cancelBtn" type="button">
+            <button
+              onClick={closePopup}
+              className="cancelBtn"
+              type="button"
+            >
               Cancel
             </button>
             <input

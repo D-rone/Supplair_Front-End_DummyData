@@ -7,8 +7,6 @@ import { faBuilding } from "@fortawesome/free-solid-svg-icons";
 import { faLock } from "@fortawesome/free-solid-svg-icons";
 import SidePage from "../../components/Side/SidePage";
 import { toast } from "react-toastify";
-import { NavLink } from "react-router-dom";
-import { supplairAPI } from "../../utils/axios";
 library.add(faEnvelope, faLock, faBuilding);
 
 export default function SignUp() {
@@ -18,10 +16,6 @@ export default function SignUp() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  function extractUsername(_email) {
-    const parts = _email.split("@");
-    return parts[0];
-  }
   const handleSignUp = async (e) => {
     e.preventDefault();
     // Perform validation
@@ -34,7 +28,6 @@ export default function SignUp() {
       toast.error("All fields are required", { autoClose: false });
       return;
     }
-    
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email.trim())) {
@@ -50,16 +43,6 @@ export default function SignUp() {
     // If validation passes, proceed with sign up process
     // Example: Send form data to server or perform any other necessary actions
     try {
-      const response = await supplairAPI.post(
-        "auth-srv/api/v1/auth/register/user-infos",
-        {
-          fullname: extractUsername(email),
-          email: email,
-          password: password,
-          companyName: companyName,
-        }
-      );
-      console.log("Response:", response.data);
       toast.dismiss();
       navigate("/signup2", {
         state: { companyName: companyName },

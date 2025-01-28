@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import showMore from "../../../assets/images/more.svg";
 import { toast } from "react-toastify";
-import Cookies from "universal-cookie";
-import { supplairAPI } from "../../../utils/axios";
 
 function ProductsTable({ products, setUpdateGet, setUpdateProduct, groups }) {
   const [showDetails, setShowDetails] = useState(null);
@@ -40,21 +38,8 @@ function ProductsTable({ products, setUpdateGet, setUpdateProduct, groups }) {
 
   const deleteProduct = (groupId, productId) => {
     if (confirm("Are you sure you want to delete this product ?")) {
-      const cookies = new Cookies();
-      const storedAccessToken = cookies.get("access_token");
-      supplairAPI
-        .delete("products-srv/command/products_group/" + groupId + "/product/" + productId, {
-          headers: {
-            Authorization: `Bearer ${storedAccessToken}`,
-          },
-        })
-        .then((response) => {
-          toast.success(response.data);
-          setUpdateGet((prev) => !prev);
-        })
-        .catch((err) => {
-          toast.error(err.message);
-        });
+      toast.success("Delete Product");
+      setUpdateGet((prev) => !prev);
     }
   };
 
@@ -86,7 +71,7 @@ function ProductsTable({ products, setUpdateGet, setUpdateProduct, groups }) {
                   src={
                     product.imagePaths && product.imagePaths.length > 0
                       ? product.imagePaths[0]
-                      : _defaultPic
+                      : "/defaultProduct.png"
                   }
                   className="inline w-16 h-16 mx-6 rounded-sm"
                 />
@@ -137,7 +122,11 @@ function ProductsTable({ products, setUpdateGet, setUpdateProduct, groups }) {
                     </button>
                   </div>
                 ) : (
-                  <img src={showMore} alt="" className="w-6 " />
+                  <img
+                    src={showMore}
+                    alt=""
+                    className="w-6 "
+                  />
                 )}
               </td>
               <td></td>
@@ -153,11 +142,15 @@ function ProductsTable({ products, setUpdateGet, setUpdateProduct, groups }) {
       >
         <div className="relative h-full overflow-y-scroll">
           {products.map((product) => {
-            const productsGroup = groups.find(
-              (group) => group.productsGroupId == product.productsGroupId
-            );
+            const productsGroup = {
+              name: "Test Group",
+              categoryId: "23",
+            };
             return showDetails === product.productId ? (
-              <div key={product.productId} className="p-8 h-full overflow-y-scroll">
+              <div
+                key={product.productId}
+                className="p-8 h-full overflow-y-scroll"
+              >
                 <h1 className="text-4xl font-semibold text-supplair-primary mb-4">
                   {product.name}
                 </h1>
@@ -167,11 +160,20 @@ function ProductsTable({ products, setUpdateGet, setUpdateProduct, groups }) {
                   </div>
                   <div className="mb-4">
                     <strong>Images:</strong>
-                    <div className="flex flex-wrap mt-2" style={{ maxWidth: "100%" }}>
+                    <div
+                      className="flex flex-wrap mt-2"
+                      style={{ maxWidth: "100%" }}
+                    >
                       {product.imagePaths &&
                         product.imagePaths.slice(0, 8).map((imagePath, index) => (
-                          <div key={index} className="p-1 max-h-32">
-                            <a href={imagePath} target="_blank">
+                          <div
+                            key={index}
+                            className="p-1 max-h-32"
+                          >
+                            <a
+                              href={imagePath}
+                              target="_blank"
+                            >
                               <img
                                 src={imagePath}
                                 alt={`Image ${index}`}

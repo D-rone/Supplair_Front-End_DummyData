@@ -5,10 +5,9 @@ import UpdateGroupProductPopup from "../../pupups/UpdateGroupProductPopup";
 import _defaultPic from "../../../assets/images/noProfilePic.png";
 import moreIcon from "../../../assets/images/more.svg";
 import { ScaleLoader } from "react-spinners";
-import Cookies from "universal-cookie";
-import { supplairAPI } from "../../../utils/axios";
 import Pagination from "../../utils/Pagination";
 import { NavLink } from "react-router-dom";
+import dummyData from "./dummyData.json";
 
 function GroupProducts() {
   const [showOptionsForId, setShowOptionsForId] = useState(null);
@@ -26,26 +25,12 @@ function GroupProducts() {
 
   let makeRequest = (page) => {
     setLoading(true);
-    const cookies = new Cookies();
-    const storedAccessToken = cookies.get("access_token");
 
-    supplairAPI
-      .get("products-srv/query/supplier/myProductsGroups?page=" + page + "&size=8", {
-        headers: {
-          Authorization: `Bearer ${storedAccessToken}`,
-        },
-      })
-      .then((data) => {
-        console.log(data?.data?.content);
-        setGroupProducts(data.data?.content);
-        setTotalPages(data.data?.totalPages);
-        setLoading(false);
-      })
-      .catch((err) => {
-        if (Math.floor(err?.response?.status / 100) == 5) toast.error("Server Error");
-        else toast.error(err.message);
-        setLoading(false);
-      });
+    setTimeout(() => {
+      setGroupProducts(dummyData.gp[page]);
+      setTotalPages(3);
+      setLoading(false);
+    }, 1000);
   };
 
   useEffect(() => {
@@ -69,26 +54,8 @@ function GroupProducts() {
   const deleteProductsGroup = (e, id) => {
     e.stopPropagation();
     if (confirm("Are you sure you want to delete this products group ?")) {
-      const cookies = new Cookies();
-      const storedAccessToken = cookies.get("access_token");
-      supplairAPI
-        .delete("products-srv/command/products_group/" + id, {
-          headers: {
-            Authorization: `Bearer ${storedAccessToken}`,
-          },
-        })
-        .then((response) => {
-          toast.success(response.data);
-          setUpdateGet((prev) => !prev);
-        })
-        .catch((err) => {
-          if (err?.response?.status == 500) {
-            let message = "Can't delete a non empty Products Group";
-            if (err?.response?.data.includes(message)) toast.error(message);
-          } else {
-            toast.error(err.message);
-          }
-        });
+      toast.success("Product group deleted");
+      setUpdateGet((prev) => !prev);
     }
   };
 
@@ -134,7 +101,7 @@ function GroupProducts() {
                   key={groupProduct?.productsGroupId}
                 >
                   <td className="whitespace-no-wrap font font-regular text-supplair-secondary">
-                    <NavLink to={groupProduct.productsGroupId}>
+                    <NavLink to={groupProduct.name}>
                       <h3 className="inline px-16 text-xl font-bold">{groupProduct.name} </h3>
                     </NavLink>
                   </td>
@@ -180,7 +147,11 @@ function GroupProducts() {
                       );
                     }}
                   >
-                    <img src={moreIcon} alt="More Options" className="w-6" />
+                    <img
+                      src={moreIcon}
+                      alt="More Options"
+                      className="w-6"
+                    />
                   </td>
                 </tr>
               ))

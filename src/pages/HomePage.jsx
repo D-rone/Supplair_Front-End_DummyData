@@ -1,15 +1,10 @@
-import React, {
-  createContext,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import TopBar from "../components/home/TopBar";
 import SideBar from "../components/home/SideBar";
 import HomeBody from "../components/home/HomeBody";
 import Cookies from "universal-cookie";
 import { useNavigate } from "react-router-dom";
-import { supplairAPI } from "../utils/axios";
+import dummyData from "./userData.json";
 
 const UserContext = createContext();
 export const useUserContext = () => useContext(UserContext);
@@ -20,55 +15,22 @@ function HomePage() {
   const [userData, setUserData] = useState(null);
   const [loaded, setLoaded] = useState(false);
   const [reload, setReload] = useState(false);
+
   const cookies = new Cookies();
   const storedAccessToken = cookies.get("access_token");
-  const formData = new FormData();
-  formData.append("token", storedAccessToken);
+
+  console.log(storedAccessToken)
+  if (!storedAccessToken) {
+    navigate("/login");
+  }
 
   useEffect(() => {
-    supplairAPI
-      .post(`auth-srv/api/v1/auth/verify-token`, formData)
-      .then((res) => {
-        console.log(res.data.isValid);
-        if (res.data.isValid == false) {
-          navigate("/login", { replace: true });
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    if (storedAccessToken) {
-      supplairAPI
-        .get(`auth-srv/api/v1/user-details`, {
-          headers: {
-            Authorization: `Bearer ${storedAccessToken}`,
-          },
-        })
-        .then((res) => {
-          console.log(res.data);
-          setLoaded(true);
-          setUserData(res.data);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
+    setLoaded(true);
+    setUserData(dummyData[storedAccessToken]);
   }, []);
   useEffect(() => {
-    supplairAPI
-      .get(`auth-srv/api/v1/user-details`, {
-        headers: {
-          Authorization: "Bearer " + storedAccessToken,
-        },
-      })
-      .then((res) => {
-        console.log(res.data);
-        setLoaded(true);
-        setUserData(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    setLoaded(true);
+    setUserData(dummyData[storedAccessToken]);
   }, [reload]);
 
   let closeProfilePopUp = () => {
@@ -80,9 +42,7 @@ function HomePage() {
   return (
     <div>
       {loaded ? (
-        <UserContext.Provider
-          value={{ userData, setUserData, reload, setReload }}
-        >
+        <UserContext.Provider value={{ userData, setUserData, reload, setReload }}>
           <TopBar
             profileDropdown={profileDropdown}
             setProfileDropdown={setProfileDropdown}

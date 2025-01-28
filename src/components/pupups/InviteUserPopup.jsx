@@ -2,31 +2,21 @@ import React, { useEffect, useReducer, useState } from "react";
 import PopUp1 from "./PopUp16";
 import { toast } from "react-toastify";
 import { useUserContext } from "../../pages/HomePage";
-import Cookies from "universal-cookie";
 import { ScaleLoader } from "react-spinners";
-import { supplairAPI } from "../../utils/axios";
 
 function InviteUserPopup({ close, setReload, reload }) {
-  const cookies = new Cookies();
-  const storedAccessToken = cookies.get("access_token");
-  const formData = new FormData();
   const { userData, setUserData } = useUserContext();
   const [loaded, setLoaded] = useState(false);
   const [roles, setRoles] = useState([]);
 
   useEffect(() => {
-    supplairAPI
-      .get(`auth-srv/api/v1/roles/` + userData.companyId, {
-        headers: {
-          Authorization: "Bearer " + storedAccessToken,
-        },
-      })
-      .then((res) => {
-        setRoles(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+      setRoles([
+        { roleName: "Role 1", permissions: ["Inventory", "Sales", "Billing"] },
+        { roleName: "Role 2", permissions: ["Inventory"] },
+        { roleName: "Role 3", permissions: ["Billing"] },
+        { roleName: "Role 4", permissions: ["Announcements"] },
+        { roleName: "Role 5", permissions: ["Users & Roles"] },
+      ]);
   }, []);
 
   let closePopup = (e) => {
@@ -49,20 +39,6 @@ function InviteUserPopup({ close, setReload, reload }) {
       }
       setLoaded(true);
       try {
-        const response = await supplairAPI.post(
-          `auth-srv/api/v1/invite-user`,
-          {
-            email: email,
-            fullname: name,
-            roleName: role,
-            companyName: userData.companyName,
-          },
-          {
-            headers: {
-              Authorization: "Bearer " + storedAccessToken,
-            },
-          }
-        );
         toast.dismiss();
         setLoaded(false);
         setReload(!reload);
@@ -89,7 +65,10 @@ function InviteUserPopup({ close, setReload, reload }) {
   );
 
   return (
-    <PopUp1 closeMe={closePopup} title="Invite User">
+    <PopUp1
+      closeMe={closePopup}
+      title="Invite User"
+    >
       <div className="p-4">
         {loaded ? (
           <div
@@ -103,7 +82,10 @@ function InviteUserPopup({ close, setReload, reload }) {
             <ScaleLoader />
           </div>
         ) : null}
-        <form onSubmit={handleInviteUser} style={{ opacity: loaded ? 0.2 : 1 }}>
+        <form
+          onSubmit={handleInviteUser}
+          style={{ opacity: loaded ? 0.2 : 1 }}
+        >
           <div className="flex flex-col gap-1 mb-6 text-sm font-semibold">
             <span>User Name :</span>
             <input
@@ -141,11 +123,17 @@ function InviteUserPopup({ close, setReload, reload }) {
                 onChange={(e) => setRole(e.target.value)}
                 className="w-full h-10 px-6 border-2 border-gray-400 rounded-lg focus:outline-supplair-primary"
               >
-                <option value="" disabled>
+                <option
+                  value=""
+                  disabled
+                >
                   -- Select an option --
                 </option>
                 {roles.map((role) => (
-                  <option value={role.roleName} key={role.roleName}>
+                  <option
+                    value={role.roleName}
+                    key={role.roleName}
+                  >
                     {role.roleName}
                   </option>
                 ))}
@@ -153,7 +141,11 @@ function InviteUserPopup({ close, setReload, reload }) {
             )}
           </div>
           <div className="flex justify-end gap-5">
-            <button onClick={closePopup} className="cancelBtn" type="button">
+            <button
+              onClick={closePopup}
+              className="cancelBtn"
+              type="button"
+            >
               Cancel
             </button>
             <input
