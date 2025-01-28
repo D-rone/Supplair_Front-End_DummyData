@@ -33,7 +33,13 @@ function App() {
 
   return (
     <>
-      <Suspense fallback={<ScaleLoader />}>
+      <Suspense
+        fallback={
+          <div className="h-screen w-screen flex justify-center items-center">
+            <ScaleLoader />
+          </div>
+        }
+      >
         <ScreenContext.Provider value={{ showLogoText, authSideBar }}>
           <RouterProvider router={router} />
         </ScreenContext.Provider>
